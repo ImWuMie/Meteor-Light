@@ -18,6 +18,7 @@ public class Categories {
     public static final Category World = new Category("World", Items.GRASS_BLOCK.getDefaultStack());
     public static final Category Misc = new Category("Misc", Items.LAVA_BUCKET.getDefaultStack());
     public static final Category Crash = new Category("Crash", Items.TNT.getDefaultStack());
+    public static final Category MeteorPlus = new Category("MeteorPlus", Items.EMERALD_BLOCK.getDefaultStack());
 
 
     public static boolean REGISTERING;

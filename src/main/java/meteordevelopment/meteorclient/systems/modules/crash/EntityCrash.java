@@ -14,9 +14,9 @@ import net.minecraft.network.packet.c2s.play.VehicleMoveC2SPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
-
 public class EntityCrash extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+
 
     private final Setting<Modes> mode = sgGeneral.add(new EnumSetting.Builder<Modes>()
         .name("mode")

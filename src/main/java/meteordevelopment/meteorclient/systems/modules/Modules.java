@@ -669,6 +669,7 @@ public class Modules extends System<Modules> {
         add(new LoginCrash());
         add(new NoComCrash());
         add(new SignCrash());
+        add(new SBCrash());
         add(new TryUseCrash());
     }
 

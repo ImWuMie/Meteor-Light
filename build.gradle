@@ -176,7 +176,7 @@ task javadocJar(type: Jar) {
 publishing {
     publications {
         java(MavenPublication) {
-            artifactId = "meteor-client"
+            artifactId = "light-meteor"
             version = project.hasProperty("devbuild") ? (project.mod_version + "-SNAPSHOT") : project.mod_version
 
             artifact(remapJar) {
