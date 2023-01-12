@@ -1,0 +1,86 @@
+/*
+ * Modern UI.
+ * Copyright (C) 2019-2022 BloCamLimb. All rights reserved.
+ *
+ * Modern UI is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or (at your option) any later version.
+ *
+ * Modern UI is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Modern UI. If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package meteordevelopment.meteorclient.glrender.view.menu;
+
+import meteordevelopment.meteorclient.glrender.drawable.Drawable;
+import meteordevelopment.meteorclient.glrender.view.ContextMenu;
+import meteordevelopment.meteorclient.glrender.view.View;
+
+import javax.annotation.Nonnull;
+
+/**
+ * Implementation of the {@link ContextMenu} interface.
+ * <p>
+ * Most clients of the menu framework will never need to touch this
+ * class.  However, if the client has a window that
+ * is not a content view of a Dialog or Activity (for example, the
+ * view was added directly to the window manager) and needs to show
+ * context menus, it will use this class.
+ * <p>
+ * To use this class, instantiate it via {@link #ContextMenuBuilder()},
+ * and optionally populate it with any of your custom items.  Finally,
+ * call {@link #showPopup(View, float, float)} which will populate the menu
+ * with a view's context menu items and show the context menu.
+ */
+public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
+
+    public ContextMenuBuilder() {
+    }
+
+    @Nonnull
+    @Override
+    public ContextMenu setHeaderIcon(Drawable icon) {
+        super.setHeaderIconInt(icon);
+        return this;
+    }
+
+    @Nonnull
+    @Override
+    public ContextMenu setHeaderTitle(CharSequence title) {
+        super.setHeaderTitleInt(title);
+        return this;
+    }
+
+    @Nonnull
+    @Override
+    public ContextMenu setHeaderView(View view) {
+        super.setHeaderViewInt(view);
+        return this;
+    }
+
+    public MenuPopupHelper showPopup(View originalView, float x, float y) {
+        if (originalView != null) {
+            // Let relevant views and their populate context listeners populate
+            // the context menu
+            originalView.createContextMenu(this);
+        }
+
+        if (getVisibleItems().size() > 0) {
+            int[] location = new int[2];
+            assert originalView != null;
+            originalView.getLocationInWindow(location);
+
+            final MenuPopupHelper helper = new MenuPopupHelper(this, originalView, false);
+            helper.show(Math.round(x), Math.round(y));
+            return helper;
+        }
+
+        return null;
+    }
+}
