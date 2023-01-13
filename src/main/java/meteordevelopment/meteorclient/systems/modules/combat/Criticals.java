@@ -19,6 +19,7 @@ import meteordevelopment.meteorclient.settings.SettingGroup;
 import meteordevelopment.meteorclient.systems.modules.Categories;
 import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.systems.modules.Modules;
+import meteordevelopment.meteorclient.utils.player.ChatUtils;
 import meteordevelopment.meteorclient.utils.player.PlayerUtils;
 import meteordevelopment.orbit.EventHandler;
 import net.minecraft.entity.Entity;
@@ -102,6 +103,9 @@ public class Criticals extends Module {
                     } case More -> {
                         sendCritPacket(0.00000000001, false);
                         sendCritPacket(0.0, false);
+                    } case CubeX -> {
+                        ChatUtils.sendPlayerMsg("你干嘛哼哼哼啊啊啊啊哼哼哼");
+                        ChatUtils.sendPlayerMsg("加入cubex小酒馆啊哼哼哼哼啊啊啊啊");
                     } case Test -> {
                         sendCritPacket(0.000114514,false);
                         sendCritPacket(0.000191981,false);
@@ -113,6 +117,7 @@ public class Criticals extends Module {
                             attacks = 0;
                         }
                     }
+
                     case Matrix -> {
                         attacks++;
                         if(attacks > 3) {
@@ -204,6 +209,7 @@ public class Criticals extends Module {
         Matrix,
         TpHop,
         More,
+        CubeX,
         Test,
         Bypass,
         Jump,
