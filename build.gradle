@@ -1,4 +1,4 @@
-// test test test
+// test test tes
 plugins {
     id 'fabric-loom' version '0.12-SNAPSHOT'
     id 'maven-publish'
