@@ -28,15 +28,15 @@ public class Stencil {
         RenderSystem.stencilFunc(invert ? GL11.GL_EQUAL : GL11.GL_NOTEQUAL, (int)1, (int)65535);
         RenderSystem.stencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_REPLACE);
         RenderSystem.colorMask(true, true, true, true);
-        GL11.glEnable(GL11.GL_ALPHA_TEST);
+       // GL11.glEnable(GL11.GL_ALPHA_TEST);
         RenderSystem.enableBlend();
-        GL11.glAlphaFunc(GL11.GL_GREATER, 0.0f );
+       // GL11.glAlphaFunc(GL11.GL_GREATER, 0.0f );
 	 }
     
 
     public static void dispose() {
         GL11.glDisable(GL11.GL_STENCIL_TEST);
-        GL11.glDisable(GL11.GL_ALPHA_TEST);
+       // GL11.glDisable(GL11.GL_ALPHA_TEST);
         RenderSystem.disableBlend();
     }
 
