@@ -39,7 +39,6 @@ public class SBCrash extends Module {
     public void onActivate() {
         if (mc.world != null && mc.player != null) {
             info("The client crashed in 10 seconds.");
-            info("吴篾气死我了！");
             ticks  = 0;
             start = true;
         }
