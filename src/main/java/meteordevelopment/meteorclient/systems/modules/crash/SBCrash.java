@@ -11,8 +11,6 @@ import meteordevelopment.orbit.EventHandler;
 
 
 public class SBCrash extends Module {
-
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final Setting<Integer> amount = sgGeneral.add(new IntSetting.Builder()
             .name("SB Amount")
@@ -24,8 +22,9 @@ public class SBCrash extends Module {
     );
 
     public SBCrash() {
-        super(Categories.Crash, "SB-crash", "Crashes all servers and your client");
+        super(Categories.Crash, "SB-crash", "Crashes your client");
     }
+
     private final Setting<Boolean> disableOnLeave = sgGeneral.add(new BoolSetting.Builder()
             .name("disable-on-leave")
             .description("Disables spam when you leave a server.")
@@ -46,8 +45,6 @@ public class SBCrash extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) throws Exception {
-        // 傻逼雨惹怒
-        // 大傻逼吴篾(气死我了
         if (start) {
             int endTicks = 20 * 10;
             if (ticks >= endTicks) {
