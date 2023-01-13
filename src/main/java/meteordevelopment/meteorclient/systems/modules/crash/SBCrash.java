@@ -1,22 +1,16 @@
+/*By Yurnu 6666*/
 package meteordevelopment.meteorclient.systems.modules.crash;
 
+import meteordevelopment.meteorclient.events.game.GameLeftEvent;
 import meteordevelopment.meteorclient.systems.modules.Categories;
 import meteordevelopment.meteorclient.events.world.TickEvent;
 import meteordevelopment.meteorclient.settings.SettingGroup;
 import meteordevelopment.meteorclient.settings.*;
 import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.orbit.EventHandler;
-import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import java.util.Random;
+
 
 public class SBCrash extends Module {
-    private final Random r = new Random();
-
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final Setting<Integer> amount = sgGeneral.add(new IntSetting.Builder()
             .name("SB Amount")
@@ -28,15 +22,43 @@ public class SBCrash extends Module {
     );
 
     public SBCrash() {
-        super(Categories.Crash, "SB-crash", "Crashes all servers and your client");
+        super(Categories.Crash, "SB-crash", "Crashes your client");
     }
 
+    private final Setting<Boolean> disableOnLeave = sgGeneral.add(new BoolSetting.Builder()
+            .name("disable-on-leave")
+            .description("Disables spam when you leave a server.")
+            .defaultValue(true)
+            .build()
+    );
+
+    int ticks = 0;
+    boolean start = false;
+    @Override
+    public void onActivate() {
+        if (mc.world != null && mc.player != null) {
+            info("The client crashed in 10 seconds.");
+            ticks  = 0;
+            start = true;
+        }
+    }
 
     @EventHandler
-    private void onTick(TickEvent.Post event) {
-        if (mc.getNetworkHandler() == null) return;
-        for (int i = 0; i < amount.get(); i++) {
-            System.exit(0);
+    private void onTick(TickEvent.Pre event) throws Exception {
+        if (start) {
+            int endTicks = 20 * 10;
+            if (ticks >= endTicks) {
+                throw new Exception("sb yurnu L");
+            } else {
+                ticks++;
+            }
         }
+    }
+
+    @EventHandler
+    private void onGameLeft(GameLeftEvent event) {
+        if (disableOnLeave.get()) toggle();
+        ticks = 0;
+        start = false;
     }
 }

@@ -9,10 +9,10 @@ import static org.lwjgl.system.MemoryUtil.memPutInt;
 public class Renderer2DQuad extends Renderer2D {
 
     // Rounded quad
-    private final double circleNone = 0;
-    private final double circleQuarter = Math.PI / 2;
-    private final double circleHalf = circleQuarter * 2;
-    private final double circleThreeQuarter = circleQuarter * 3;
+    public final double circleNone = 0;
+    public final double circleQuarter = Math.PI / 2;
+    public final double circleHalf = circleQuarter * 2;
+    public final double circleThreeQuarter = circleQuarter * 3;
 
     public Renderer2DQuad(boolean texture) {
         super(texture);

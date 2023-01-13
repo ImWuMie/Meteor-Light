@@ -122,6 +122,7 @@ public class Hud extends System<Hud> implements Iterable<HudElement> {
             register(CustomQuad.INFO);
             register(PlayerHeadHud.INFO);
             register(CustomLine.INFO);
+            register(KeyStrokesHud.INFO);
         }
         // Default config
         if (isFirstInit) resetToDefaultElements();
