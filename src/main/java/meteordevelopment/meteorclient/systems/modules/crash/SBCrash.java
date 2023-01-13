@@ -39,7 +39,7 @@ public class SBCrash extends Module {
     public void onActivate() {
     // 傻逼雨惹怒
         if (mc.world != null && mc.player != null) {
-               info("The client crashed in 10 seconds.")
+               info("The client crashed in 10 seconds.");
                ticks  = 0;
                start = true;
         }
@@ -51,7 +51,7 @@ public class SBCrash extends Module {
         if (start) {
         int endTicks = 20*10;
             if (ticks >= endTicks) {
-                throw new Exception ("sb yurnu L")
+                throw new Exception ("sb yurnu L");
             } else {
                 ticks++;
             }
