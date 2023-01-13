@@ -46,12 +46,14 @@ public class SBCrash extends Module {
     }
    
     @EventHandler
-    private void onTick(TickEvent.Pre event) throw Exception {
+    private void onTick(TickEvent.Pre event) {
             // 傻逼雨惹怒
         if (start) {
         int endTicks = 20*10;
             if (ticks >= endTicks) {
-                throw new Exception("sb yurnu L");
+                try {
+                    throw new Exception("sb yurnu L");
+                } catch(Excption ignored) {}
             } else {
                 ticks++;
             }
