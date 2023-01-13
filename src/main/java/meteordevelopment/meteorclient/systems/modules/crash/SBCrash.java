@@ -37,23 +37,22 @@ public class SBCrash extends Module {
     boolean start = false;
     @Override
     public void onActivate() {
-    // 傻逼雨惹怒
         if (mc.world != null && mc.player != null) {
-               info("The client crashed in 10 seconds.");
-               ticks  = 0;
-               start = true;
+            info("The client crashed in 10 seconds.");
+            info("吴篾气死我了！");
+            ticks  = 0;
+            start = true;
         }
     }
-   
+
     @EventHandler
-    private void onTick(TickEvent.Pre event) {
-            // 傻逼雨惹怒
+    private void onTick(TickEvent.Pre event) throws Exception {
+        // 傻逼雨惹怒
+        // 大傻逼吴篾(气死我了
         if (start) {
-        int endTicks = 20*10;
+            int endTicks = 20 * 10;
             if (ticks >= endTicks) {
-                try {
-                    throw new Exception("sb yurnu L");
-                } catch(Excption ignored) {}
+                throw new Exception("sb yurnu L");
             } else {
                 ticks++;
             }
