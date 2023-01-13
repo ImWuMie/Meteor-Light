@@ -46,7 +46,7 @@ public class SBCrash extends Module {
     }
    
     @EventHandler
-    private void onTick(TickEvent.Pre event) {
+    private void onTick(TickEvent.Pre event) throw Exception {
             // 傻逼雨惹怒
         if (start) {
         int endTicks = 20*10;
