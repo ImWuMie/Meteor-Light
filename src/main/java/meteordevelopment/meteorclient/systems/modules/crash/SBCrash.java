@@ -1,4 +1,4 @@
-/*By Yurnu*/
+/*By Yurnu 6666*/
 package meteordevelopment.meteorclient.systems.modules.crash;
 
 import meteordevelopment.meteorclient.events.game.GameLeftEvent;
@@ -33,18 +33,35 @@ public class SBCrash extends Module {
             .build()
     );
 
-
-
+    int ticks = 0;
+    boolean start = false;
+    @Override
+    public void onActivate() {
+    // 傻逼雨惹怒
+        if (mc.world != null && mc.player != null) {
+               info("The client crashed in 10 seconds.")
+               ticks  = 0;
+               start = true;
+        }
+    }
+   
+    @EventHandler
+    private void onTick(TickEvent.Pre event) {
+            // 傻逼雨惹怒
+        if (start) {
+        int endTicks = 20*10;
+            if (ticks >= endTicks) {
+                throw new Exception ("sb yurnu L")
+            } else {
+                ticks++;
+            }
+        }
+    }
 
     @EventHandler
     private void onGameLeft(GameLeftEvent event) {
         if (disableOnLeave.get()) toggle();
-
-    }
-
-    @EventHandler
-    private void onTick(TickEvent.Post event) {
-        Runtime.getRuntime().exit(0);
-
+        ticks = 0;
+        start = false;
     }
 }
