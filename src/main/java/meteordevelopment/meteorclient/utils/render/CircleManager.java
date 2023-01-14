@@ -1,9 +1,12 @@
 package meteordevelopment.meteorclient.utils.render;
 
+import meteordevelopment.meteorclient.renderer.Renderer;
+import meteordevelopment.meteorclient.systems.hud.HudRenderer;
 import meteordevelopment.meteorclient.utils.render.color.Color;
 import meteordevelopment.meteorclient.utils.render.notifications.DrawUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
+import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,19 +48,17 @@ public class CircleManager {
 		}
 	}
 	
-	public void drawCircles(){
+	public void drawCircles(HudRenderer renderer){
 		for(Circle c : circles){
 			if(!c.complete)
-			drawCircle(c);
+			drawCircle(c,renderer);
 		}
 	}
 	
-	public void drawCircle(Circle c){
+	public void drawCircle(Circle c,HudRenderer renderer){
     	float progress = (float) (c.progress * MinecraftClient.getInstance().getTickDelta() + (c.lastProgress * (1.0f - MinecraftClient.getInstance().getTickDelta())));
     	if(!c.complete)
-
-
-			DrawUtils.renderer.circlePart((int)c.x, (int)c.y,DrawUtils.renderer.circleNone,DrawUtils.renderer.circleQuarter, progress, new Color(1f, 1f, 1f, (1-Math.min(1f, Math.max(0f, (float)(progress/c.topRadius))))/2));
+			renderer.circle(c.x,c.y, progress, new Color(1f, 1f, 1f, (1-Math.min(1f, Math.max(0f, (float)(progress/c.topRadius))))/2));
 	}
 	
 }

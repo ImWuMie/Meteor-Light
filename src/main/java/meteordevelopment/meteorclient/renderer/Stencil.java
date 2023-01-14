@@ -2,6 +2,7 @@ package meteordevelopment.meteorclient.renderer;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import meteordevelopment.meteorclient.mixininterface.IFramebuffer;
 import net.minecraft.client.MinecraftClient;
 import org.lwjgl.opengl.EXTFramebufferObject;
 import org.lwjgl.opengl.GL11;
@@ -12,7 +13,7 @@ public class Stencil {
 	public static int nextColor;
 	
     public static void write(boolean renderClipLayer) {
-        Stencil.checkSetupFBO();
+      //  Stencil.checkSetupFBO();
         GlStateManager._clearStencil(0);
         GlStateManager._clear(GL11.GL_STENCIL_BUFFER_BIT,false);
         GL11.glEnable(GL11.GL_STENCIL_TEST);
@@ -44,7 +45,7 @@ public class Stencil {
         net.minecraft.client.gl.Framebuffer fbo = mc.getFramebuffer();
         if (fbo != null && fbo.getDepthAttachment() > -1) {
             Stencil.setupFBO(fbo);
-            fbo.delete();
+            ((IFramebuffer)fbo).setDepthAttachment(-1);
         }
     }
 

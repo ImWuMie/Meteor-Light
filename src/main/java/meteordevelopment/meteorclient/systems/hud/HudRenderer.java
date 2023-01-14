@@ -101,6 +101,14 @@ public class HudRenderer {
         Renderer2D.COLOR.quad(x, y, width, height, color);
     }
 
+    public void roundedQuad(double x, double y, double width, double height,float radius, Color color) {
+        Renderer2D.COLOR.quad(x, y, width, height, color);
+    }
+
+    public void circle(double x,double y, float radius,Color fillColor) {
+        Renderer2D.COLOR.circle(x, y, radius, fillColor);
+    }
+
     public void quad(double x, double y, double width, double height, Color cTopLeft, Color cTopRight, Color cBottomRight, Color cBottomLeft) {
         Renderer2D.COLOR.quad(x, y, width, height, cTopLeft, cTopRight, cBottomRight, cBottomLeft);
     }

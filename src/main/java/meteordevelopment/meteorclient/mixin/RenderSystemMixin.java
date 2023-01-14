@@ -18,12 +18,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(RenderSystem.class)
 public class RenderSystemMixin {
-    @Inject(method = "initRenderer", at = @At("TAIL"))
+   /* @Inject(method = "initRenderer", at = @At("TAIL"))
     private static void onInitRenderer(int debugVerbosity, boolean debugSync, CallbackInfo ci) {
         new MeteorGL();
         Core.initMainThread();
         Core.initOpenGL();
         UIManager.initialize();
         UIManager.initializeRenderer();
-    }
+    }*/
 }

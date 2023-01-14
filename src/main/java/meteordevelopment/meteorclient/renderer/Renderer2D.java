@@ -5,11 +5,13 @@
 
 package meteordevelopment.meteorclient.renderer;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import meteordevelopment.meteorclient.gui.renderer.packer.TextureRegion;
 import meteordevelopment.meteorclient.utils.PreInit;
 import meteordevelopment.meteorclient.utils.render.color.Color;
 import meteordevelopment.meteorclient.utils.render.notifications.DrawUtils;
 import net.minecraft.client.util.math.MatrixStack;
+import org.lwjgl.opengl.GL11;
 
 public class Renderer2D {
     public static Renderer2D COLOR;
@@ -88,6 +90,57 @@ public class Renderer2D {
 
     public void quad(double x, double y, double width, double height, Color color) {
         quad(x, y, width, height, color, color, color, color);
+    }
+
+    public void roundedQuad(double x, double y, double width, double height,float radius, Color color) {
+        x += (float) (radius / 2.0f + 0.5);
+        y += (float) (radius / 2.0f + 0.5);
+        width -= (float) (radius / 2.0f + 0.5);
+        height -= (float) (radius / 2.0f + 0.5);
+        quad(x, y, width, height, color);
+        circle(width - radius / 2.0f, y + radius / 2.0f, radius, color);
+        circle(x + radius / 2.0f, height - radius / 2.0f, radius, color);
+        circle(x + radius / 2.0f, y + radius / 2.0f, radius, color);
+        circle(width - radius / 2.0f, height - radius / 2.0f, radius, color);
+        quad((x - radius / 2.0f - 0.5f), (y + radius / 2.0f), width, (height - radius / 2.0f), color);
+        quad(x,(y + radius / 2.0f), (width + radius / 2.0f + 0.5f), (height - radius / 2.0f), color);
+        quad((x + radius / 2.0f), (y - radius / 2.0f - 0.5f), (width - radius / 2.0f), (height - radius / 2.0f), color);
+        quad((x + radius / 2.0f), y, (width - radius / 2.0f), (height + radius / 2.0f + 0.5f), color);
+    }
+
+    public void circle(double x,double y, float radius,Color fillColor) {
+        arc(x, y, 0.0f, 360.0f, radius, fillColor);
+    }
+
+    public void arc(double x, double y,double start,double end,float radius,Color color) {
+        RenderSystem.texParameter(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+        RenderSystem.texParameter(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+        arcEllipse(x, y, start, end, radius, radius, color);
+    }
+
+    public void arcEllipse(double x,double y, double start, double end, float w,float h,Color color) {
+        double temp;
+        if (start > end) {
+            temp = end;
+            end = start;
+            start = temp;
+        }
+        RenderSystem.enableBlend();
+        RenderSystem.disableTexture();
+        RenderSystem.blendFunc(770, 771);
+            GL11.glLineWidth(2.0f);
+            for (double i = end; i >= start; i -= 4.0) {
+                final float ldx = (float) Math.cos(i * 3.141592653589793 / 180.0) * w * 1.001f;
+                final float ldy = (float) Math.sin(i * 3.141592653589793 / 180.0) * h * 1.001f;
+                line(x,y,x + ldx, y + ldy,color);
+            }
+        for (double i = end; i >= start; i -= 4.0) {
+            final float ldx = (float) Math.cos(i * 3.141592653589793 / 180.0) * w;
+            final float ldy = (float) Math.sin(i * 3.141592653589793 / 180.0) * h;
+            line(x,y,x + ldx, y + ldy,color);
+        }
+        RenderSystem.enableTexture();
+        RenderSystem.disableBlend();
     }
 
     // Textured quads
