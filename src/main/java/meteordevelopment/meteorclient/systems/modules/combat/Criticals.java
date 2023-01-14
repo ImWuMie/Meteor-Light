@@ -5,10 +5,8 @@
 
 package meteordevelopment.meteorclient.systems.modules.combat;
 
-
 import meteordevelopment.meteorclient.events.packets.PacketEvent;
 import meteordevelopment.meteorclient.events.world.TickEvent;
-import meteordevelopment.meteorclient.mixin.PlayerMoveC2SPacketAccessor;
 import meteordevelopment.meteorclient.mixininterface.IPlayerInteractEntityC2SPacket;
 import meteordevelopment.meteorclient.mixininterface.IPlayerMoveC2SPacket;
 import meteordevelopment.meteorclient.mixininterface.IVec3d;
@@ -19,7 +17,6 @@ import meteordevelopment.meteorclient.settings.SettingGroup;
 import meteordevelopment.meteorclient.systems.modules.Categories;
 import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.systems.modules.Modules;
-import meteordevelopment.meteorclient.utils.player.ChatUtils;
 import meteordevelopment.meteorclient.utils.player.PlayerUtils;
 import meteordevelopment.orbit.EventHandler;
 import net.minecraft.entity.Entity;
@@ -27,7 +24,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
-import net.minecraft.util.math.Vec3d;
 
 public class Criticals extends Module {
 
@@ -39,7 +35,6 @@ public class Criticals extends Module {
         .defaultValue(Mode.Packet)
         .build()
     );
-
 
     private final Setting<Boolean> ka = sgGeneral.add(new BoolSetting.Builder()
         .name("only-killaura")
@@ -67,8 +62,7 @@ public class Criticals extends Module {
     }
 
     public boolean isMoving() {
-        if (mc.player.forwardSpeed > 0) return true;
-        return false;
+        return PlayerUtils.isMoving();
     }
 
     @EventHandler
@@ -103,9 +97,6 @@ public class Criticals extends Module {
                     } case More -> {
                         sendCritPacket(0.00000000001, false);
                         sendCritPacket(0.0, false);
-                    } case CubeX -> {
-                        ChatUtils.sendPlayerMsg("你干嘛哼哼哼啊啊啊啊哼哼哼");
-                        ChatUtils.sendPlayerMsg("加入cubex小酒馆啊哼哼哼哼啊啊啊啊");
                     } case Test -> {
                         sendCritPacket(0.000114514,false);
                         sendCritPacket(0.000191981,false);
@@ -209,7 +200,6 @@ public class Criticals extends Module {
         Matrix,
         TpHop,
         More,
-        CubeX,
         Test,
         Bypass,
         Jump,
