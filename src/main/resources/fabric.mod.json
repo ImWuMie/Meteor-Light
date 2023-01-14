@@ -12,10 +12,9 @@
     "Yurnu"
   ],
   "contact": {
-    "homepage": "https://meteorclient.com",
-    "issues": "https://github.com/MeteorDevelopment/meteor-client/issues",
-    "sources": "https://github.com/MeteorDevelopment/meteor-client",
-    "discord": "https://meteorclient.com/discord"
+    "homepage": "https://github.com/ImWuMie/Meteor-Light",
+    "issues": "https://github.com/ImWuMie/Meteor-Light/issues",
+    "sources": "https://github.com/ImWuMie/Meteor-Light"
   },
   "license": "LGPL-114514",
   "icon": "assets/meteor-client/icon.png",
@@ -39,7 +38,7 @@
     "meteor-client:commit": "${commit}",
     "modmenu": {
       "links": {
-        "modmenu.discord": "https://meteorclient.com/discord"
+        "modmenu.discord": "none"
       }
     }
   },
