@@ -26,7 +26,6 @@ import meteordevelopment.meteorclient.events.game.OpenScreenEvent;
 import meteordevelopment.meteorclient.events.meteor.KeyEvent;
 import meteordevelopment.meteorclient.events.meteor.MouseButtonEvent;
 import meteordevelopment.meteorclient.events.world.TickEvent;
-import meteordevelopment.meteorclient.glrender.screen.UIManager;
 import meteordevelopment.meteorclient.gui.GuiThemes;
 import meteordevelopment.meteorclient.gui.WidgetScreen;
 import meteordevelopment.meteorclient.gui.tabs.Tabs;
@@ -289,7 +288,6 @@ public class MeteorClient implements ClientModInitializer {
         // Register event handlers
         EVENT_BUS.registerLambdaFactory(ADDON.getPackage(), (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
         AddonManager.ADDONS.forEach(addon -> EVENT_BUS.registerLambdaFactory(addon.getPackage(), (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup())));
-        EVENT_BUS.subscribe(UIManager.class);
 
         // Register init classes
         ReflectInit.registerPackages();

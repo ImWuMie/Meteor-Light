@@ -9,7 +9,6 @@ import baritone.BaritoneProvider;
 import baritone.api.BaritoneAPI;
 import baritone.api.IBaritone;
 import baritone.api.IBaritoneProvider;
-import meteordevelopment.meteorclient.chatbot.ChatCommandManager;
 import meteordevelopment.meteorclient.events.game.ReceiveMessageEvent;
 import meteordevelopment.meteorclient.gui.GuiTheme;
 import meteordevelopment.meteorclient.gui.utils.StarscriptTextBoxRenderer;

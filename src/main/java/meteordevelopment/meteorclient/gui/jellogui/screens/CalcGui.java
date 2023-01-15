@@ -5,7 +5,6 @@
 
 package meteordevelopment.meteorclient.gui.jellogui.screens;
 
-import meteordevelopment.meteorclient.glrender.MeteorGL;
 import meteordevelopment.meteorclient.gui.GuiTheme;
 import meteordevelopment.meteorclient.gui.GuiThemes;
 import meteordevelopment.meteorclient.gui.jellogui.GuiFront;

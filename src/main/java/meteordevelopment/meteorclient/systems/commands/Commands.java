@@ -9,7 +9,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import meteordevelopment.meteorclient.MeteorClient;
-import meteordevelopment.meteorclient.chatbot.ChatCommandManager;
 import meteordevelopment.meteorclient.systems.System;
 import meteordevelopment.meteorclient.systems.Systems;
 import meteordevelopment.meteorclient.systems.commands.commands.*;
@@ -42,8 +41,6 @@ public class Commands extends System<Commands> {
 
     @Override
     public void init() {
-        ChatCommandManager.init();
-
         add(new BaritoneCommand());
         add(new VClipCommand());
         add(new GhostCommand());

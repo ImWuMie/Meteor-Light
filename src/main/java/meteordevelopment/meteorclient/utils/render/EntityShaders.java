@@ -116,7 +116,6 @@ public class EntityShaders {
     }
 
     public static void onResized(int width, int height) {
-        if (MeteorClient.disableShaders) return;
         if (overlayFramebuffer != null) overlayFramebuffer.resize(width, height, false);
         if (outlinesFramebuffer != null) outlinesFramebuffer.resize(width, height, false);
     }

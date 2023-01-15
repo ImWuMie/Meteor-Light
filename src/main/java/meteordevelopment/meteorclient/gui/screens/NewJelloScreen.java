@@ -6,18 +6,8 @@
 package meteordevelopment.meteorclient.gui.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import meteordevelopment.meteorclient.glrender.DefaultFragment;
-import meteordevelopment.meteorclient.glrender.MeteorGL;
-import meteordevelopment.meteorclient.glrender.Paint;
-import meteordevelopment.meteorclient.glrender.fragment.Fragment;
-import meteordevelopment.meteorclient.glrender.opengl.GLFramebuffer;
-import meteordevelopment.meteorclient.glrender.opengl.GLSurfaceCanvas;
-import meteordevelopment.meteorclient.glrender.screen.MuiScreen;
-import meteordevelopment.meteorclient.glrender.screen.UIManager;
 import meteordevelopment.meteorclient.gui.GuiThemes;
 import meteordevelopment.meteorclient.renderer.GL;
-import meteordevelopment.meteorclient.renderer.Renderer;
-import meteordevelopment.meteorclient.renderer.font.FontRenderers;
 import meteordevelopment.meteorclient.renderer.particles.ParticleEngine;
 import meteordevelopment.meteorclient.renderer.text.CFont;
 import meteordevelopment.meteorclient.renderer.text.TTFFontRender;
@@ -38,7 +28,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.lang.reflect.Method;
 
-public class NewJelloScreen extends Screen implements MuiScreen {
+public class NewJelloScreen extends Screen {
     public static MeteorIdentifier IDAlt,IDExit,IDLogo,IDMulitPlayer,IDSettings,IDSinglePlayer,IDBg,IDBg1;static {IDAlt = new MeteorIdentifier("textures/jello/altmanager.png");IDExit = new MeteorIdentifier("textures/jello/exit.png");IDLogo = new MeteorIdentifier("textures/jello/jellologo.png");IDMulitPlayer = new MeteorIdentifier("textures/jello/multiplayer.png");IDSettings = new MeteorIdentifier("textures/jello/settings.png");IDSinglePlayer = new MeteorIdentifier("textures/jello/singleplayer.png");IDBg = new MeteorIdentifier("textures/jello/bg.png");IDBg1 = new MeteorIdentifier("textures/jello/bg1.png");}
     public static float animatedMouseX,animatedMouseY;
     public float zoom1 = 1, zoom2 = 1, zoom3 = 1, zoom4 = 1, zoom5 = 1;
@@ -56,14 +46,13 @@ public class NewJelloScreen extends Screen implements MuiScreen {
         RenderSystem.setShaderTexture(0,IDBg);
         drawTexture(matrices, (int) (-1177/2 - 372 - animatedMouseX + this.width), (int) (-34/2 +8 - animatedMouseY/9.5f + this.height/19 - 19), 0, 0, 3840/2, 1180/2, 3840/2, 1180/2);
 
-        //pe.render(matrices,animatedMouseX, animatedMouseY,this.width,this.height);
+        pe.render(matrices,animatedMouseX, animatedMouseY,this.width,this.height);
 
         float offset = (int) (-16 + this.width/2 - 289/2f + 8);
         float height = (int) (this.height/2 + 29/2f - 8 + 1f);
 
         GL.enableBlend();
         RenderSystem.defaultBlendFunc();
-
         // Logo
         matrices.push();
         RenderSystem.setShaderTexture(0,IDLogo);
@@ -78,7 +67,7 @@ public class NewJelloScreen extends Screen implements MuiScreen {
         }else if (zoom1 > 1) {
             zoom1 -= 0.06666666666666666666666666666667;
         }
-        if(zoom1 > 1){
+        if(zoom1 > 1) {
             matrices.translate(offset + 32, height + 64, 0);
             matrices.scale((float) Math.min(1.2, zoom1), (float) Math.min(1.2, zoom1), 1);
             matrices.translate(-(offset + 32), -(height + 64), 0);
@@ -86,11 +75,11 @@ public class NewJelloScreen extends Screen implements MuiScreen {
         }
         RenderSystem.setShaderTexture(0,IDSinglePlayer);
         RenderSystem.texParameter(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
-        RenderSystem.texParameter(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+        RenderSystem.texParameter(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
         drawTexture(matrices,offset, height, 0, 0, 64, 64, 64, 64);
         matrices.pop();
         matrices.push();
-        if(zoom1 > 1){
+        if(zoom1 > 1) {
             matrices.translate(offset + 32, height + 64, 0);
             matrices.scale((float) Math.min(1, zoom1-.2), (float) Math.min(1, zoom1-.2), 1);
             matrices.translate(-(offset + 32), -(height + 64), 0);
@@ -115,11 +104,11 @@ public class NewJelloScreen extends Screen implements MuiScreen {
         }
         RenderSystem.setShaderTexture(0,IDMulitPlayer);
         RenderSystem.texParameter(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
-        RenderSystem.texParameter(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+        RenderSystem.texParameter(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
         drawTexture(matrices,offset, height, 0, 0, 64, 64, 64, 64);
         matrices.pop();
         matrices.push();
-        if(zoom2 > 1){
+        if(zoom2 > 1) {
             matrices.translate(offset + 32, height + 64, 0);
             matrices.scale((float) Math.min(1, zoom2-.2), (float) Math.min(1, zoom2-.2), 1);
             matrices.translate(-(offset + 32), -(height + 64), 0);
@@ -136,7 +125,7 @@ public class NewJelloScreen extends Screen implements MuiScreen {
         }else if (zoom3 > 1) {
             zoom3 -= 0.06666666666666666666666666666667;
         }
-        if(zoom3 > 1){
+        if(zoom3 > 1) {
             matrices.translate(offset + 32, height + 64, 0);
             matrices.scale((float) Math.min(1.2, zoom3), (float) Math.min(1.2, zoom3), 1);
             matrices.translate(-(offset + 32), -(height + 64), 0);
@@ -313,9 +302,4 @@ public class NewJelloScreen extends Screen implements MuiScreen {
         matrices.pop();
     }
 
-    @NotNull
-    @Override
-    public Fragment getFragment() {
-        return new DefaultFragment();
-    }
 }
