@@ -174,11 +174,11 @@ public class FPSGraphHud extends HudElement {
         double height = this.height.get();
         double width = this.width.get();
 
-        Renderer2D.COLOR.begin();
+      //  renderer.begin();
 
         if (background.get()) {
             double offset = outherOffset.get() * 5;
-            Renderer2D.COLOR.quad(x - offset, y - offset - 1, box.width + offset * 2 + 1, box.height + offset * 2, backgroundColor.get());
+            renderer.quad(x - offset, y - offset - 1, box.width + offset * 2 + 1, box.height + offset * 2, backgroundColor.get());
         }
 
         switch (frameType.get()) {
@@ -192,7 +192,7 @@ public class FPSGraphHud extends HudElement {
                     double tempLength1 = Math.min(length, height / 2);
                     double tempLength2 = length >= height / 2 ? tempLength1 + 1 : tempLength1;
 
-                    Renderer2D.COLOR.quad(
+                    renderer.quad(
                         x - 1,
                         y + height / 2 - tempLength1,
                         1,
@@ -200,7 +200,7 @@ public class FPSGraphHud extends HudElement {
                         frameColor.get()
                     );
 
-                    Renderer2D.COLOR.quad(
+                    renderer.quad(
                         x + width,
                         y + height / 2 - tempLength2,
                         1,
@@ -216,7 +216,7 @@ public class FPSGraphHud extends HudElement {
 
                         // Top
 
-                        Renderer2D.COLOR.quad(
+                        renderer.quad(
                             x - 1,
                             y - 1,
                             length,
@@ -224,7 +224,7 @@ public class FPSGraphHud extends HudElement {
                             frameColor.get()
                         );
 
-                        Renderer2D.COLOR.quad(
+                        renderer.quad(
                             x - 1,
                             y + height - 1,
                             length,
@@ -234,7 +234,7 @@ public class FPSGraphHud extends HudElement {
 
                         // Bottom
 
-                        Renderer2D.COLOR.quad(
+                        renderer.quad(
                             x + width,
                             y - 1,
                             -length,
@@ -242,7 +242,7 @@ public class FPSGraphHud extends HudElement {
                             frameColor.get()
                         );
 
-                        Renderer2D.COLOR.quad(
+                        renderer.quad(
                             x + width,
                             y + height - 1,
                             -length,
@@ -261,7 +261,7 @@ public class FPSGraphHud extends HudElement {
 
                         // Top
 
-                        Renderer2D.COLOR.quad(
+                        renderer.quad(
                             x + width / 2 - extraLength - 1,
                             y - 1,
                             extraLength * 2,
@@ -271,7 +271,7 @@ public class FPSGraphHud extends HudElement {
 
                         // Bottom
 
-                        Renderer2D.COLOR.quad(
+                        renderer.quad(
                             x + width / 2 - extraLength - 1,
                             y + height - 1,
                             extraLength * 2,
@@ -283,15 +283,15 @@ public class FPSGraphHud extends HudElement {
             }
 
             case Default -> {
-                Renderer2D.COLOR.quad(x - 1, y - 1, width + 2, 1, frameColor.get());
-                Renderer2D.COLOR.quad(x - 1, y + height - 1, width + 2, 1, frameColor.get());
-                Renderer2D.COLOR.quad(x - 1, y, 1, height, frameColor.get());
-                Renderer2D.COLOR.quad(x + width, y, 1, height, frameColor.get());
+                renderer.quad(x - 1, y - 1, width + 2, 1, frameColor.get());
+                renderer.quad(x - 1, y + height - 1, width + 2, 1, frameColor.get());
+                renderer.quad(x - 1, y, 1, height, frameColor.get());
+                renderer.quad(x + width, y, 1, height, frameColor.get());
             }
         }
 
         if (averageFPSLine.get()) {
-            Renderer2D.COLOR.quad(x - 1, y + height / 2 - 1, width + 1, 1, frameColor.get());
+            renderer.quad(x - 1, y + height / 2 - 1, width + 1, 1, frameColor.get());
         }
 
         MetricsData metrics = mc.getMetricsData();
@@ -335,7 +335,7 @@ public class FPSGraphHud extends HudElement {
                         double x2 = x + factor;
                         double y2 = y + height - 2 - (Math.abs(t2 > height - 4 ? height - 4 : t2));
 
-                        Renderer2D.COLOR.line(x1, y1, x2, y2, foregroundColor.get());
+                        renderer.line(x1, y1, x2, y2, foregroundColor.get());
 
                         x += factor;
                     }
@@ -351,10 +351,10 @@ public class FPSGraphHud extends HudElement {
                         double tempHeight = -(t > height - 3 ? height - 3 : t <= 0 ? 0 : t > height - 3 ? height - 3 : t);
 
                         if (averageFPSLine.get() && y + height / 2 + 1 >= tempY + tempHeight) {
-                            Renderer2D.COLOR.quad(tempX, tempY, tempWidth, -height / 2 + 3, foregroundColor.get());
-                            Renderer2D.COLOR.quad(tempX, y + height / 2 - 2, tempWidth, tempHeight + height / 2, foregroundColor.get());
+                            renderer.quad(tempX, tempY, tempWidth, -height / 2 + 3, foregroundColor.get());
+                            renderer.quad(tempX, y + height / 2 - 2, tempWidth, tempHeight + height / 2, foregroundColor.get());
                         } else {
-                            Renderer2D.COLOR.quad(tempX, tempY, tempWidth, tempHeight, foregroundColor.get());
+                            renderer.quad(tempX, tempY, tempWidth, tempHeight, foregroundColor.get());
                         }
 
                         x += factor;
@@ -381,8 +381,8 @@ public class FPSGraphHud extends HudElement {
                         double y3 = y + h1 + 2;
                         double y4 = y + h2 + 2;
 
-                        Renderer2D.COLOR.line(x1, y1, x2, y2, foregroundColor.get());
-                        Renderer2D.COLOR.line(x1, y3, x2, y4, foregroundColor.get());
+                        renderer.line(x1, y1, x2, y2, foregroundColor.get());
+                        renderer.line(x1, y3, x2, y4, foregroundColor.get());
 
                         x += factor;
                     }
@@ -398,11 +398,11 @@ public class FPSGraphHud extends HudElement {
                         double tempHeight = -(Math.max(Math.min((double) t / 2 + yOffset.get(), height - 2), 0)) / 2;
 
                         if (averageFPSLine.get() && y + height / 2 + 1 >= tempY + tempHeight) {
-                            Renderer2D.COLOR.quad(tempX, tempY - 2, tempWidth, tempHeight + 1.9, foregroundColor.get());
-                            Renderer2D.COLOR.quad(tempX, tempY + 1, tempWidth, -tempHeight - 2, foregroundColor.get());
+                            renderer.quad(tempX, tempY - 2, tempWidth, tempHeight + 1.9, foregroundColor.get());
+                            renderer.quad(tempX, tempY + 1, tempWidth, -tempHeight - 2, foregroundColor.get());
                         } else {
-                            Renderer2D.COLOR.quad(tempX, tempY, tempWidth, tempHeight + 0.1, foregroundColor.get());
-                            Renderer2D.COLOR.quad(tempX, tempY, tempWidth, -tempHeight - 0.1, foregroundColor.get());
+                            renderer.quad(tempX, tempY, tempWidth, tempHeight + 0.1, foregroundColor.get());
+                            renderer.quad(tempX, tempY, tempWidth, -tempHeight - 0.1, foregroundColor.get());
                         }
 
                         x += factor;
@@ -411,7 +411,7 @@ public class FPSGraphHud extends HudElement {
             }
         }
 
-        Renderer2D.COLOR.render(null);
+      //  renderer.end();
     }
 
     // Enums

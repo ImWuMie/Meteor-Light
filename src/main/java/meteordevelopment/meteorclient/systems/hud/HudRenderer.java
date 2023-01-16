@@ -65,7 +65,7 @@ public class HudRenderer {
     }
 
     public void end() {
-        Renderer2D.COLOR.render(new MatrixStack());
+        Renderer2D.COLOR.render(null);
 
         if (hud.hasCustomFont()) {
             // Render fonts that were visited this frame and move to cache which weren't visited

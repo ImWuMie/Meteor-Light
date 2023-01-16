@@ -44,7 +44,7 @@ public class ParticleEngine {
 				p.opacity = 32;
 			}
 			Color c = new Color((int)255, (int)255, (int)255, (int)p.opacity);
-			drawBorderedCircle(p.x + Math.sin(p.ticks/2)*50 + -xOffset/5, (p.ticks*p.speed)*p.ticks/10 + -yOffset/5, p.radius*(p.opacity/32), c.getRGB(), c.getRGB());
+			drawBorderedCircle(matrixStack,p.x + Math.sin(p.ticks/2)*50 + -xOffset/5, (p.ticks*p.speed)*p.ticks/10 + -yOffset/5, p.radius*(p.opacity/32), c.getRGB(), c.getRGB());
 			p.ticks += 0.05;// +(0.005*1.777*(GLUtils.getMouseX()-lastMouseX) + 0.005*(GLUtils.getMouseY()-lastMouseY));
 			if(((p.ticks*p.speed)*p.ticks/10 + -yOffset/5) > displayHeight || ((p.ticks*p.speed)*p.ticks/10 + -yOffset/5) < 0 || (p.x + Math.sin(p.ticks/2)*50 + -xOffset/5) > displayWidth|| (p.x + Math.sin(p.ticks/2)*50 + -xOffset/5) < 0){
 				toremove.add(p);
@@ -67,15 +67,19 @@ public class ParticleEngine {
         return (int) (displayHeight - MinecraftClient.getInstance().mouse.getY() * displayHeight / displayHeight - 1);
     }
 
-    public static void drawBorderedCircle(double x, double y, float radius, int outsideC, int insideC) {
+    public static void drawBorderedCircle(MatrixStack matrixStack,double x, double y, float radius, int outsideC, int insideC) {
         GL11.glDisable((int)3553);
         GL11.glBlendFunc((int)770, (int)771);
         GL11.glEnable((int)2848);
+        matrixStack.push();
         GL11.glPushMatrix();
+        matrixStack.scale(0.1f,0.1f,0.1f);
         GL11.glScalef((float)0.1f, (float)0.1f, (float)0.1f);
         drawCircle(x *= 10, y *= 10, radius *= 10.0f, insideC);
         GL11.glScalef((float)10.0f, (float)10.0f, (float)10.0f);
+        matrixStack.scale(10f,10f,10f);
         GL11.glPopMatrix();
+        matrixStack.pop();
         GL11.glEnable((int)3553);
         GL11.glDisable((int)2848);
     }
@@ -86,12 +90,16 @@ public class ParticleEngine {
         float green = (float)(color >> 8 & 255) / 255.0f;
         float blue = (float)(color & 255) / 255.0f;
         GL11.glColor4f((float)red, (float)green, (float)blue, (float)alpha);
+        Renderer2D.COLOR.begin();
         GL11.glBegin((int)9);
         int i = 0;
         while (i <= 360) {
+            Renderer2D.COLOR.line(x,y,x + Math.sin((double)i * 3.141526 / 180.0) * (double)radius, (double)((double)y + Math.cos((double)i * 3.141526 / 180.0) * (double)radius),new meteordevelopment.meteorclient.utils.render.color.Color(red,green,blue,alpha));
+
             GL11.glVertex2d(x + Math.sin((double)i * 3.141526 / 180.0) * (double)radius, (double)((double)y + Math.cos((double)i * 3.141526 / 180.0) * (double)radius));
             ++i;
         }
         GL11.glEnd();
+        Renderer2D.COLOR.end();
     }
 }

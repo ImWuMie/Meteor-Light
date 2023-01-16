@@ -14,6 +14,7 @@ import meteordevelopment.meteorclient.systems.hud.Hud;
 import meteordevelopment.meteorclient.systems.hud.HudElement;
 import meteordevelopment.meteorclient.systems.hud.HudElementInfo;
 import meteordevelopment.meteorclient.systems.hud.HudRenderer;
+import meteordevelopment.meteorclient.utils.render.RenderUtil;
 import meteordevelopment.meteorclient.utils.render.color.SettingColor;
 import meteordevelopment.orbit.EventBus;
 import meteordevelopment.orbit.EventHandler;
@@ -70,6 +71,12 @@ public class CustomQuad extends HudElement {
         .build()
     );
 
+    private final Setting<SettingColor> bottomColor = sgGeneral.add(new ColorSetting.Builder()
+            .name("color1")
+            .defaultValue(new SettingColor(255,255,255,255))
+            .build()
+    );
+
     public final Setting<Boolean> test = sgGeneral.add(new BoolSetting.Builder()
         .name("test")
         .defaultValue(false)
@@ -104,14 +111,7 @@ public class CustomQuad extends HudElement {
             if (test.get()) {
                 x = this.x;
                 y = this.y;
-                MeteorRender meteorRender = new MeteorRender(RenderSystem.renderThreadTesselator()) ;
-                meteorRender.pushMatrix();
-                meteorRender.setColor(color.get().toAWTColor());
-                meteorRender.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
-                meteorRender.vertex2d(x,y);
-                meteorRender.vertex2d(quadWidth.get(),quadHeight.get());
-                meteorRender.end();
-                meteorRender.popMatrix();
+                RenderUtil.R2DUtils.drawGradientRect((float) x,(float) y,quadWidth.get().floatValue(),quadHeight.get().floatValue(),color.get().toAWTColor().getRGB(),bottomColor.get().toAWTColor().getRGB());
             } else {
                 if (customXY.get()) {
                     x = quadX.get();

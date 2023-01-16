@@ -8,6 +8,7 @@ package meteordevelopment.meteorclient.gui.screens;
 import com.mojang.blaze3d.systems.RenderSystem;
 import meteordevelopment.meteorclient.gui.GuiThemes;
 import meteordevelopment.meteorclient.renderer.GL;
+import meteordevelopment.meteorclient.renderer.Renderer2D;
 import meteordevelopment.meteorclient.renderer.particles.ParticleEngine;
 import meteordevelopment.meteorclient.renderer.text.CFont;
 import meteordevelopment.meteorclient.renderer.text.TTFFontRender;
