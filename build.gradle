@@ -92,11 +92,6 @@ dependencies {
 
     // seedcracker api
     implementation (include('com.github.19MisterX98.SeedcrackerX:seedcrackerx-api:2.10.1')) {transitive = false}
-
-    // meteor gl render
-    implementation (include("com.github.ben-manes.caffeine:caffeine:${caffeine_version}")) {transitive = false}
-    implementation (include("com.vladsch.flexmark:flexmark:${flexmark_version}")) {transitive = false}
-    implementation (include("io.reactivex.rxjava3:rxjava:${rxjava_version}")) {transitive = false}
     //viaversion
     implementation (include("com.viaversion:viaversion:${project.viaversion_version}")) {transitive = false}
     implementation (include("com.viaversion:viarewind-all:${project.viarewindall_version}")) {transitive = false}
