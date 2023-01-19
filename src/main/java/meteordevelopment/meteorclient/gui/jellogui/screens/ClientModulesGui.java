@@ -11,12 +11,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 public class ClientModulesGui extends GuiFront {
-    public ClientModulesGui(GuiTheme theme) {
-        super(theme,"ModulesGUI");
-    }
-
-    @Override
-    public void initWidgets() {
-
+    public ClientModulesGui() {
+        super("ModulesGUI");
     }
 }
