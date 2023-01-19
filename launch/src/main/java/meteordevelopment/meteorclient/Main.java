@@ -20,7 +20,7 @@ public class Main {
         int option = JOptionPane.showOptionDialog(
                 null,
                 "To install Meteor Light you need to put it in fabric mod folder,Minecraft Version: "+mcVersion+".",
-                "要想安装Meteor Light,请将它放入Fabric Mod文件夹，Minecraft版本: "+mcVersion+".",
+
                 "Meteor Light",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.ERROR_MESSAGE,
