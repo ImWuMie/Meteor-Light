@@ -19,12 +19,13 @@ public class Main {
 
         int option = JOptionPane.showOptionDialog(
                 null,
-                "To install Meteor Client you need to put it in fabric mod folder,Minecraft Version: "+mcVersion+".",
-                "Meteor Client",
+                "To install Meteor Light you need to put it in fabric mod folder,Minecraft Version: "+mcVersion+".",
+                "要想安装Meteor Light,请将它放入Fabric Mod文件夹，Minecraft版本: "+mcVersion+".",
+                "Meteor Light",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.ERROR_MESSAGE,
                 null,
-                new String[] { "Open Wiki", "Open Mods Folder", "Exit" },
+                new String[] { "Open Wiki", "Open Mods Folder", "Open our GitHub", "Exit" },
                 null
         );
 
@@ -45,7 +46,8 @@ public class Main {
                 getOS().open(mods);
                 break;
             }
-            case 2: {
+            case 2: getOS().open("https://github.com/ImWuMie/Meteor-Light"); break;
+            case 3: {
                 break;
             }
         }
