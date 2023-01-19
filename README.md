@@ -36,8 +36,9 @@ You will be rewarded with a role on our Discord server, an in-game cape, and an 
 ## Credits
 [Meteor Team](https://github.com/MeteorDevelopment) for [Meteor Client](https://github.com/MeteorDevelopment/meteor-client)  
 [Cabaletta](https://github.com/cabaletta) and [WagYourTail](https://github.com/wagyourtail) for [Baritone](https://github.com/cabaletta/baritone)  
-The [Fabric Team](https://github.com/FabricMC) for [Fabric](https://github.com/FabricMC/fabric-loader) and [Yarn](https://github.com/FabricMC/yarn)
+The [Fabric Team](https://github.com/FabricMC) for [Fabric](https://github.com/FabricMC/fabric-loader) and [Yarn](https://github.com/FabricMC/yarn)  
 [ImWuMie](https://github.com/ImWuMie) and [Yurnu](https://github.com/StarryYurnu) for [Meteor Light](https://github.com/ImWuMie/Meteor-Light)
+
 
 ## Licensing
 This project is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html). 
