@@ -8,9 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.util.ByteBufferTypeAdapter;
-import meteordevelopment.meteorclient.renderer.Framebuffer;
-import meteordevelopment.meteorclient.renderer.GL;
-import meteordevelopment.meteorclient.renderer.Renderer2D;
+import meteordevelopment.meteorclient.renderer.*;
 import meteordevelopment.meteorclient.utils.misc.Vec2;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
@@ -30,8 +28,8 @@ public class ParticleEngine {
 
 	public void render(MatrixStack matrixStack, float mouseX, float mouseY, int displayWidth, int displayHeight){
         RenderSystem.enableBlend();
-        GL11.glDisable(GL11.GL_ALPHA_TEST);
-        GL11.glColor4f(1,1,1,1);
+        RenderSystem.defaultBlendFunc();
+        //GL11.glColor4f(1,1,1,1);
         float xOffset = displayWidth/2-mouseX;
         float yOffset = displayHeight/2-mouseY;
 		for(particles.size(); particles.size() < (int)(displayWidth/19.2f); particles.add(new Particle(displayWidth, displayHeight,new Random().nextFloat()*2 + 2, new Random().nextFloat()*5 + 5)));
@@ -52,9 +50,8 @@ public class ParticleEngine {
 		}
 
 		particles.removeAll(toremove);
-        GL11.glColor4f(1, 1, 1, 1);
-        RenderSystem.enableBlend();
-        GL11.glEnable(GL11.GL_ALPHA_TEST);
+        //GL11.glColor4f(1, 1, 1, 1);
+        RenderSystem.disableBlend();
 		lastMouseX = getMouseX(displayWidth);
 		lastMouseY = getMouseY(displayHeight);
 	}
@@ -68,38 +65,25 @@ public class ParticleEngine {
     }
 
     public static void drawBorderedCircle(MatrixStack matrixStack,double x, double y, float radius, int outsideC, int insideC) {
-        GL11.glDisable((int)3553);
-        GL11.glBlendFunc((int)770, (int)771);
-        GL11.glEnable((int)2848);
         matrixStack.push();
-        GL11.glPushMatrix();
         matrixStack.scale(0.1f,0.1f,0.1f);
-        GL11.glScalef((float)0.1f, (float)0.1f, (float)0.1f);
-        drawCircle(x *= 10, y *= 10, radius *= 10.0f, insideC);
-        GL11.glScalef((float)10.0f, (float)10.0f, (float)10.0f);
+        drawCircle(matrixStack,x *= 10, y *= 10, radius *= 10.0f, insideC);
         matrixStack.scale(10f,10f,10f);
-        GL11.glPopMatrix();
         matrixStack.pop();
-        GL11.glEnable((int)3553);
-        GL11.glDisable((int)2848);
     }
 
-    public static void drawCircle(double x, double y, float radius, int color) {
+    public static void drawCircle(MatrixStack matrices,double x, double y, float radius, int color) {
         float alpha = (float)(color >> 24 & 255) / 255.0f;
         float red = (float)(color >> 16 & 255) / 255.0f;
         float green = (float)(color >> 8 & 255) / 255.0f;
         float blue = (float)(color & 255) / 255.0f;
-        GL11.glColor4f((float)red, (float)green, (float)blue, (float)alpha);
-        Renderer2D.COLOR.begin();
-        GL11.glBegin((int)9);
         int i = 0;
+        CRender render = new CRender();
+        render.begin(DrawMode.Lines);
         while (i <= 360) {
-            Renderer2D.COLOR.line(x,y,x + Math.sin((double)i * 3.141526 / 180.0) * (double)radius, (double)((double)y + Math.cos((double)i * 3.141526 / 180.0) * (double)radius),new meteordevelopment.meteorclient.utils.render.color.Color(red,green,blue,alpha));
-
-            GL11.glVertex2d(x + Math.sin((double)i * 3.141526 / 180.0) * (double)radius, (double)((double)y + Math.cos((double)i * 3.141526 / 180.0) * (double)radius));
+            render.drawLine(x,y,x + Math.sin((double)i * 3.141526 / 180.0) * (double)radius, (double)((double)y + Math.cos((double)i * 3.141526 / 180.0) * (double)radius),new meteordevelopment.meteorclient.utils.render.color.Color(red,green,blue,alpha));
             ++i;
         }
-        GL11.glEnd();
-        Renderer2D.COLOR.end();
+        render.end(matrices);
     }
 }

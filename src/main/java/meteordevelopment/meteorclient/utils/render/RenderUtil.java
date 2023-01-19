@@ -21,6 +21,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
+import static com.mojang.blaze3d.systems.RenderSystem.recordRenderCall;
 import static org.lwjgl.opengl.GL11.*;
 
 public class RenderUtil {
@@ -31,23 +32,23 @@ public class RenderUtil {
     }
 
     public static void enableRender2D() {
-        GL11.glEnable(3042);
-        GL11.glDisable(2884);
-        GL11.glDisable(3553);
-        GL11.glEnable(2848);
-        GL11.glBlendFunc(770, 771);
-        GL11.glLineWidth(1.0F);
+            GL11.glEnable(3042);
+            GL11.glDisable(2884);
+            GL11.glDisable(3553);
+            GL11.glEnable(2848);
+            GL11.glBlendFunc(770, 771);
+            GL11.glLineWidth(1.0F);
     }
 
     public static void disableRender2D() {
-        GL11.glDisable(3042);
-        GL11.glEnable(2884);
-        GL11.glEnable(3553);
-        GL11.glDisable(2848);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GL11.glShadeModel(7424);
-        RenderSystem.disableBlend();
-        RenderSystem.enableTexture();
+            GL11.glDisable(3042);
+            GL11.glEnable(2884);
+            GL11.glEnable(3553);
+            GL11.glDisable(2848);
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GL11.glShadeModel(7424);
+            RenderSystem.disableBlend();
+            RenderSystem.enableTexture();
     }
 
     public static void color(int color) {
@@ -90,173 +91,173 @@ public class RenderUtil {
     }
 
     public static void drawRect(float x, float y, float width, float height, int color) {
-        enableRender2D();
-        setColor(color);
-        GL11.glBegin(7);
-        GL11.glVertex2d(x, y);
-        GL11.glVertex2d(x + width, y);
-        GL11.glVertex2d(x + width, y + height);
-        GL11.glVertex2d(x, y + height);
-        GL11.glEnd();
-        disableRender2D();
+            enableRender2D();
+            setColor(color);
+            GL11.glBegin(7);
+            GL11.glVertex2d(x, y);
+            GL11.glVertex2d(x + width, y);
+            GL11.glVertex2d(x + width, y + height);
+            GL11.glVertex2d(x, y + height);
+            GL11.glEnd();
+            disableRender2D();
     }
 
     public static void drawRoundedRect(float x, float y, float width, float height, float edgeRadius, int color, float borderWidth, int borderColor) {
-        if (color == 16777215) color = Color.WHITE.hashCode();
-        if (borderColor == 16777215) borderColor = Color.WHITE.hashCode();
+            if (color == 16777215) color = Color.WHITE.hashCode();
+            if (borderColor == 16777215) borderColor = Color.WHITE.hashCode();
 
-        if (edgeRadius < 0.0F) {
-            edgeRadius = 0.0F;
-        }
+            if (edgeRadius < 0.0F) {
+                edgeRadius = 0.0F;
+            }
 
-        if (edgeRadius > width / 2.0F) {
-            edgeRadius = width / 2.0F;
-        }
+            if (edgeRadius > width / 2.0F) {
+                edgeRadius = width / 2.0F;
+            }
 
-        if (edgeRadius > height / 2.0F) {
-            edgeRadius = height / 2.0F;
-        }
+            if (edgeRadius > height / 2.0F) {
+                edgeRadius = height / 2.0F;
+            }
 
-        drawRect(x + edgeRadius, y + edgeRadius, width - edgeRadius * 2.0F, height - edgeRadius * 2.0F, color);
-        drawRect(x + edgeRadius, y, width - edgeRadius * 2.0F, edgeRadius, color);
-        drawRect(x + edgeRadius, y + height - edgeRadius, width - edgeRadius * 2.0F, edgeRadius, color);
-        drawRect(x, y + edgeRadius, edgeRadius, height - edgeRadius * 2.0F, color);
-        drawRect(x + width - edgeRadius, y + edgeRadius, edgeRadius, height - edgeRadius * 2.0F, color);
-        enableRender2D();
-        RenderUtil.color(color);
-        GL11.glBegin(6);
-        float centerX = x + edgeRadius;
-        float centerY = y + edgeRadius;
-        GL11.glVertex2d((double) centerX, (double) centerY);
-        int vertices = (int) Math.min(Math.max(edgeRadius, 10.0F), 90.0F);
+            drawRect(x + edgeRadius, y + edgeRadius, width - edgeRadius * 2.0F, height - edgeRadius * 2.0F, color);
+            drawRect(x + edgeRadius, y, width - edgeRadius * 2.0F, edgeRadius, color);
+            drawRect(x + edgeRadius, y + height - edgeRadius, width - edgeRadius * 2.0F, edgeRadius, color);
+            drawRect(x, y + edgeRadius, edgeRadius, height - edgeRadius * 2.0F, color);
+            drawRect(x + width - edgeRadius, y + edgeRadius, edgeRadius, height - edgeRadius * 2.0F, color);
+            enableRender2D();
+            RenderUtil.color(color);
+            GL11.glBegin(6);
+            float centerX = x + edgeRadius;
+            float centerY = y + edgeRadius;
+            GL11.glVertex2d((double) centerX, (double) centerY);
+            int vertices = (int) Math.min(Math.max(edgeRadius, 10.0F), 90.0F);
 
-        int i;
-        double angleRadians;
-        for (i = 0; i < vertices + 1; ++i) {
-            angleRadians = 6.283185307179586D * (double) (i + 180) / (double) (vertices * 4);
-            GL11.glVertex2d((double) centerX + Math.sin(angleRadians) * (double) edgeRadius, (double) centerY + Math.cos(angleRadians) * (double) edgeRadius);
-        }
+            int i;
+            double angleRadians;
+            for (i = 0; i < vertices + 1; ++i) {
+                angleRadians = 6.283185307179586D * (double) (i + 180) / (double) (vertices * 4);
+                GL11.glVertex2d((double) centerX + Math.sin(angleRadians) * (double) edgeRadius, (double) centerY + Math.cos(angleRadians) * (double) edgeRadius);
+            }
 
-        GL11.glEnd();
-        GL11.glBegin(6);
-        centerX = x + width - edgeRadius;
-        centerY = y + edgeRadius;
-        GL11.glVertex2d((double) centerX, (double) centerY);
-        vertices = (int) Math.min(Math.max(edgeRadius, 10.0F), 90.0F);
+            GL11.glEnd();
+            GL11.glBegin(6);
+            centerX = x + width - edgeRadius;
+            centerY = y + edgeRadius;
+            GL11.glVertex2d((double) centerX, (double) centerY);
+            vertices = (int) Math.min(Math.max(edgeRadius, 10.0F), 90.0F);
 
-        for (i = 0; i < vertices + 1; ++i) {
-            angleRadians = 6.283185307179586D * (double) (i + 90) / (double) (vertices * 4);
-            GL11.glVertex2d((double) centerX + Math.sin(angleRadians) * (double) edgeRadius, (double) centerY + Math.cos(angleRadians) * (double) edgeRadius);
-        }
+            for (i = 0; i < vertices + 1; ++i) {
+                angleRadians = 6.283185307179586D * (double) (i + 90) / (double) (vertices * 4);
+                GL11.glVertex2d((double) centerX + Math.sin(angleRadians) * (double) edgeRadius, (double) centerY + Math.cos(angleRadians) * (double) edgeRadius);
+            }
 
-        GL11.glEnd();
-        GL11.glBegin(6);
-        centerX = x + edgeRadius;
-        centerY = y + height - edgeRadius;
-        GL11.glVertex2d((double) centerX, (double) centerY);
-        vertices = (int) Math.min(Math.max(edgeRadius, 10.0F), 90.0F);
+            GL11.glEnd();
+            GL11.glBegin(6);
+            centerX = x + edgeRadius;
+            centerY = y + height - edgeRadius;
+            GL11.glVertex2d((double) centerX, (double) centerY);
+            vertices = (int) Math.min(Math.max(edgeRadius, 10.0F), 90.0F);
 
-        for (i = 0; i < vertices + 1; ++i) {
-            angleRadians = 6.283185307179586D * (double) (i + 270) / (double) (vertices * 4);
-            GL11.glVertex2d((double) centerX + Math.sin(angleRadians) * (double) edgeRadius, (double) centerY + Math.cos(angleRadians) * (double) edgeRadius);
-        }
+            for (i = 0; i < vertices + 1; ++i) {
+                angleRadians = 6.283185307179586D * (double) (i + 270) / (double) (vertices * 4);
+                GL11.glVertex2d((double) centerX + Math.sin(angleRadians) * (double) edgeRadius, (double) centerY + Math.cos(angleRadians) * (double) edgeRadius);
+            }
 
-        GL11.glEnd();
-        GL11.glBegin(6);
-        centerX = x + width - edgeRadius;
-        centerY = y + height - edgeRadius;
-        GL11.glVertex2d((double) centerX, (double) centerY);
-        vertices = (int) Math.min(Math.max(edgeRadius, 10.0F), 90.0F);
+            GL11.glEnd();
+            GL11.glBegin(6);
+            centerX = x + width - edgeRadius;
+            centerY = y + height - edgeRadius;
+            GL11.glVertex2d((double) centerX, (double) centerY);
+            vertices = (int) Math.min(Math.max(edgeRadius, 10.0F), 90.0F);
 
-        for (i = 0; i < vertices + 1; ++i) {
-            angleRadians = 6.283185307179586D * (double) i / (double) (vertices * 4);
-            GL11.glVertex2d((double) centerX + Math.sin(angleRadians) * (double) edgeRadius, (double) centerY + Math.cos(angleRadians) * (double) edgeRadius);
-        }
+            for (i = 0; i < vertices + 1; ++i) {
+                angleRadians = 6.283185307179586D * (double) i / (double) (vertices * 4);
+                GL11.glVertex2d((double) centerX + Math.sin(angleRadians) * (double) edgeRadius, (double) centerY + Math.cos(angleRadians) * (double) edgeRadius);
+            }
 
-        GL11.glEnd();
-        RenderUtil.color(borderColor);
-        GL11.glLineWidth(borderWidth);
-        GL11.glBegin(3);
-        centerX = x + edgeRadius;
-        centerY = y + edgeRadius;
-        vertices = (int) Math.min(Math.max(edgeRadius, 10.0F), 90.0F);
+            GL11.glEnd();
+            RenderUtil.color(borderColor);
+            GL11.glLineWidth(borderWidth);
+            GL11.glBegin(3);
+            centerX = x + edgeRadius;
+            centerY = y + edgeRadius;
+            vertices = (int) Math.min(Math.max(edgeRadius, 10.0F), 90.0F);
 
-        for (i = vertices; i >= 0; --i) {
-            angleRadians = 6.283185307179586D * (double) (i + 180) / (double) (vertices * 4);
-            GL11.glVertex2d((double) centerX + Math.sin(angleRadians) * (double) edgeRadius, (double) centerY + Math.cos(angleRadians) * (double) edgeRadius);
-        }
+            for (i = vertices; i >= 0; --i) {
+                angleRadians = 6.283185307179586D * (double) (i + 180) / (double) (vertices * 4);
+                GL11.glVertex2d((double) centerX + Math.sin(angleRadians) * (double) edgeRadius, (double) centerY + Math.cos(angleRadians) * (double) edgeRadius);
+            }
 
-        GL11.glVertex2d((double) (x + edgeRadius), (double) y);
-        GL11.glVertex2d((double) (x + width - edgeRadius), (double) y);
-        centerX = x + width - edgeRadius;
-        centerY = y + edgeRadius;
+            GL11.glVertex2d((double) (x + edgeRadius), (double) y);
+            GL11.glVertex2d((double) (x + width - edgeRadius), (double) y);
+            centerX = x + width - edgeRadius;
+            centerY = y + edgeRadius;
 
-        for (i = vertices; i >= 0; --i) {
-            angleRadians = 6.283185307179586D * (double) (i + 90) / (double) (vertices * 4);
-            GL11.glVertex2d((double) centerX + Math.sin(angleRadians) * (double) edgeRadius, (double) centerY + Math.cos(angleRadians) * (double) edgeRadius);
-        }
+            for (i = vertices; i >= 0; --i) {
+                angleRadians = 6.283185307179586D * (double) (i + 90) / (double) (vertices * 4);
+                GL11.glVertex2d((double) centerX + Math.sin(angleRadians) * (double) edgeRadius, (double) centerY + Math.cos(angleRadians) * (double) edgeRadius);
+            }
 
-        GL11.glVertex2d((double) (x + width), (double) (y + edgeRadius));
-        GL11.glVertex2d((double) (x + width), (double) (y + height - edgeRadius));
-        centerX = x + width - edgeRadius;
-        centerY = y + height - edgeRadius;
+            GL11.glVertex2d((double) (x + width), (double) (y + edgeRadius));
+            GL11.glVertex2d((double) (x + width), (double) (y + height - edgeRadius));
+            centerX = x + width - edgeRadius;
+            centerY = y + height - edgeRadius;
 
-        for (i = vertices; i >= 0; --i) {
-            angleRadians = 6.283185307179586D * (double) i / (double) (vertices * 4);
-            GL11.glVertex2d((double) centerX + Math.sin(angleRadians) * (double) edgeRadius, (double) centerY + Math.cos(angleRadians) * (double) edgeRadius);
-        }
+            for (i = vertices; i >= 0; --i) {
+                angleRadians = 6.283185307179586D * (double) i / (double) (vertices * 4);
+                GL11.glVertex2d((double) centerX + Math.sin(angleRadians) * (double) edgeRadius, (double) centerY + Math.cos(angleRadians) * (double) edgeRadius);
+            }
 
-        GL11.glVertex2d((double) (x + width - edgeRadius), (double) (y + height));
-        GL11.glVertex2d((double) (x + edgeRadius), (double) (y + height));
-        centerX = x + edgeRadius;
-        centerY = y + height - edgeRadius;
+            GL11.glVertex2d((double) (x + width - edgeRadius), (double) (y + height));
+            GL11.glVertex2d((double) (x + edgeRadius), (double) (y + height));
+            centerX = x + edgeRadius;
+            centerY = y + height - edgeRadius;
 
-        for (i = vertices; i >= 0; --i) {
-            angleRadians = 6.283185307179586D * (double) (i + 270) / (double) (vertices * 4);
-            GL11.glVertex2d((double) centerX + Math.sin(angleRadians) * (double) edgeRadius, (double) centerY + Math.cos(angleRadians) * (double) edgeRadius);
-        }
+            for (i = vertices; i >= 0; --i) {
+                angleRadians = 6.283185307179586D * (double) (i + 270) / (double) (vertices * 4);
+                GL11.glVertex2d((double) centerX + Math.sin(angleRadians) * (double) edgeRadius, (double) centerY + Math.cos(angleRadians) * (double) edgeRadius);
+            }
 
-        GL11.glVertex2d((double) x, (double) (y + height - edgeRadius));
-        GL11.glVertex2d((double) x, (double) (y + edgeRadius));
-        GL11.glEnd();
-        disableRender2D();
+            GL11.glVertex2d((double) x, (double) (y + height - edgeRadius));
+            GL11.glVertex2d((double) x, (double) (y + edgeRadius));
+            GL11.glEnd();
+            disableRender2D();
     }
 
     public static void fastRoundedRect(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float radius) {
-        float z = 0;
-        if (paramXStart > paramXEnd) {
-            z = paramXStart;
-            paramXStart = paramXEnd;
-            paramXEnd = z;
-        }
+            float z = 0;
+            if (paramXStart > paramXEnd) {
+                z = paramXStart;
+                paramXStart = paramXEnd;
+                paramXEnd = z;
+            }
 
-        if (paramYStart > paramYEnd) {
-            z = paramYStart;
-            paramYStart = paramYEnd;
-            paramYEnd = z;
-        }
+            if (paramYStart > paramYEnd) {
+                z = paramYStart;
+                paramYStart = paramYEnd;
+                paramYEnd = z;
+            }
 
-        double x1 = (double)(paramXStart + radius);
-        double y1 = (double)(paramYStart + radius);
-        double x2 = (double)(paramXEnd - radius);
-        double y2 = (double)(paramYEnd - radius);
+            double x1 = (double) (paramXStart + radius);
+            double y1 = (double) (paramYStart + radius);
+            double x2 = (double) (paramXEnd - radius);
+            double y2 = (double) (paramYEnd - radius);
 
-        glEnable(GL_LINE_SMOOTH);
-        glLineWidth(1);
+            glEnable(GL_LINE_SMOOTH);
+            glLineWidth(1);
 
-        glBegin(GL_POLYGON);
+            glBegin(GL_POLYGON);
 
-        double degree = Math.PI / 180;
-        for (double i = 0; i <= 90; i += 1)
-            glVertex2d(x2 + Math.sin(i * degree) * radius, y2 + Math.cos(i * degree) * radius);
-        for (double i = 90; i <= 180; i += 1)
-            glVertex2d(x2 + Math.sin(i * degree) * radius, y1 + Math.cos(i * degree) * radius);
-        for (double i = 180; i <= 270; i += 1)
-            glVertex2d(x1 + Math.sin(i * degree) * radius, y1 + Math.cos(i * degree) * radius);
-        for (double i = 270; i <= 360; i += 1)
-            glVertex2d(x1 + Math.sin(i * degree) * radius, y2 + Math.cos(i * degree) * radius);
-        glEnd();
-        glDisable(GL_LINE_SMOOTH);
+            double degree = Math.PI / 180;
+            for (double i = 0; i <= 90; i += 1)
+                glVertex2d(x2 + Math.sin(i * degree) * radius, y2 + Math.cos(i * degree) * radius);
+            for (double i = 90; i <= 180; i += 1)
+                glVertex2d(x2 + Math.sin(i * degree) * radius, y1 + Math.cos(i * degree) * radius);
+            for (double i = 180; i <= 270; i += 1)
+                glVertex2d(x1 + Math.sin(i * degree) * radius, y1 + Math.cos(i * degree) * radius);
+            for (double i = 270; i <= 360; i += 1)
+                glVertex2d(x1 + Math.sin(i * degree) * radius, y2 + Math.cos(i * degree) * radius);
+            glEnd();
+            glDisable(GL_LINE_SMOOTH);
     }
 
     public static void quickDrawRect(final float x, final float y, final float x2, final float y2) {

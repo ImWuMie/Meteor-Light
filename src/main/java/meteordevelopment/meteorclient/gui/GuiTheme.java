@@ -227,10 +227,6 @@ public abstract class GuiTheme implements ISerializable<GuiTheme> {
         return new AccountsScreen(this);
     }
 
-    public WidgetScreen calcScreen() {
-        return new CalcGui(this);
-    }
-
     public WidgetScreen proxiesScreen() {
         return new ProxiesScreen(this);
     }

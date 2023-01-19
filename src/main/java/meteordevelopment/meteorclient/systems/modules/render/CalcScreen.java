@@ -18,7 +18,7 @@ public class CalcScreen extends Module {
 
     @Override
     public void onActivate() {
-        mc.setScreen(GuiThemes.get().calcScreen());
+        mc.setScreen(new CalcGui());
         toggle();
         super.onActivate();
     }

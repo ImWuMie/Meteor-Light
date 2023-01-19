@@ -5,6 +5,8 @@
 
 package meteordevelopment.meteorclient.mixin;
 
+import meteordevelopment.meteorclient.gui.GuiTheme;
+import meteordevelopment.meteorclient.gui.GuiThemes;
 import meteordevelopment.meteorclient.gui.screens.NewJelloScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
@@ -20,10 +22,18 @@ public class TitleScreenMixin extends Screen {
         super(title);
     }
 
+    @Inject(method = "tick",at = @At("HEAD"))
+    private void tick(CallbackInfo ci) {
+        if (GuiThemes.get() !=  null) {
+            client.setScreen(new NewJelloScreen());
+        }
+    }
+
     @Inject(method = "init",at = @At("HEAD"))
     private void init(CallbackInfo ci) {
-        client.setScreen(new NewJelloScreen());
-        return;
+        if (GuiThemes.get() !=  null) {
+            client.setScreen(new NewJelloScreen());
+        }
        /* this.addDrawableChild(new ButtonWidget(this.width / 2 + 2, this.height / 4 + 48 + 72 + 12+55, 98, 20, Text.literal("TitleScreen1"), (button) -> {
             this.client.setScreen(new JelloScreen());
         }));

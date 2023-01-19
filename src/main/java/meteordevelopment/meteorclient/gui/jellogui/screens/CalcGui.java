@@ -20,8 +20,8 @@ import org.lwjgl.glfw.GLFW;
 import java.util.ArrayList;
 
 public class CalcGui extends GuiFront {
-    public CalcGui(GuiTheme theme) {
-        super(theme,"CalcGui");
+    public CalcGui() {
+        super("CalcGui");
     }
 
     ArrayList<NumberButton> numberButtons = new ArrayList<>();
@@ -32,6 +32,8 @@ public class CalcGui extends GuiFront {
     double a,b;
     Double sum;
     int i;
+
+    private final Mesh mesh = new ShaderMesh(Shaders.POS_COLOR,DrawMode.Triangles, Mesh.Attrib.Vec2, Mesh.Attrib.Color);
 
     @Override
     public boolean shouldCloseOnEsc() {
@@ -106,6 +108,7 @@ public class CalcGui extends GuiFront {
         oY += 76;
         numberButtons.add(new NumberButton(idk,oY,"=",75,75));
 
+        mesh.begin();
 
         for (NumberButton button : numberButtons) {
             Color numberFontColor = new Color(255,255,255);
@@ -116,9 +119,7 @@ public class CalcGui extends GuiFront {
             double fx = button.x + (button.buttonWidth/2 - fontWidth);
             double fy = button.y + (button.buttonHeight/2 - fontHeight);
             font.render(button.name, (float) fx, (float) fy,numberFontColor);
-            Renderer2D.COLOR.begin();
-            Renderer2D.COLOR.quad(button.x, button.y, button.buttonWidth, button.buttonHeight,buttonColor);
-            Renderer2D.COLOR.render(new MatrixStack());
+            quad(button.x, button.y, button.buttonWidth, button.buttonHeight,buttonColor);
         }
 
         // Bg
@@ -127,14 +128,25 @@ public class CalcGui extends GuiFront {
         font.render("Calc",x+1,y+1,new Color(0,0,0,225),true);
         font.render(text,x+1,y+35+35,new Color(0,0,0,225));
         // Render number button
-        Renderer2D.COLOR.begin();
-        Renderer2D.COLOR.quad((int) x, (int) y,340,650,new Color(255,255,255,190));
+        quad((int) x, (int) y,340,650,new Color(255,255,255,190));
         // Drag bar
-        Renderer2D.COLOR.quad((int) x, (int) (y + 30),340,1,new Color(0,0,0,190));
-        Renderer2D.COLOR.render(new MatrixStack());
+        quad((int) x, (int) (y + 30),340,1,new Color(0,0,0,190));
+
+        mesh.end();
+        mesh.render(matrices);
     }
 
-    private void addButtons() {
+    public void quad(double x, double y, double width, double height, Color color) {
+        quad(x, y, width, height, color, color, color, color);
+    }
+
+    public void quad(double x, double y, double width, double height, Color cTopLeft, Color cTopRight, Color cBottomRight, Color cBottomLeft) {
+        mesh.quad(
+                mesh.vec2(x, y).color(cTopLeft).next(),
+                mesh.vec2(x, y + height).color(cBottomLeft).next(),
+                mesh.vec2(x + width, y + height).color(cBottomRight).next(),
+                mesh.vec2(x + width, y).color(cTopRight).next()
+        );
     }
 
     @Override
@@ -144,10 +156,6 @@ public class CalcGui extends GuiFront {
             y = (float) mouseY;
         }
         return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
-    }
-
-    @Override
-    public void initWidgets() {
     }
 
     @Override

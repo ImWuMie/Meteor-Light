@@ -22,6 +22,8 @@ import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 
+import static com.mojang.blaze3d.systems.RenderSystem.recordRenderCall;
+
 public class CustomQuad extends HudElement {
     public static final HudElementInfo<CustomQuad> INFO = new HudElementInfo<>(Hud.GROUP, "custom-quad", "render quad.", CustomQuad::new);
 
@@ -111,7 +113,9 @@ public class CustomQuad extends HudElement {
             if (test.get()) {
                 x = this.x;
                 y = this.y;
-                RenderUtil.R2DUtils.drawGradientRect((float) x,(float) y,quadWidth.get().floatValue(),quadHeight.get().floatValue(),color.get().toAWTColor().getRGB(),bottomColor.get().toAWTColor().getRGB());
+                recordRenderCall(() -> {
+                    RenderUtil.R2DUtils.drawGradientRect((float) x, (float) y, quadWidth.get().floatValue(), quadHeight.get().floatValue(), color.get().toAWTColor().getRGB(), bottomColor.get().toAWTColor().getRGB());
+                });
             } else {
                 if (customXY.get()) {
                     x = quadX.get();

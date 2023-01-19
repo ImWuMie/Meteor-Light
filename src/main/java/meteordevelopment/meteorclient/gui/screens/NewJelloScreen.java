@@ -6,13 +6,15 @@
 package meteordevelopment.meteorclient.gui.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import meteordevelopment.meteorclient.gui.GuiTheme;
 import meteordevelopment.meteorclient.gui.GuiThemes;
-import meteordevelopment.meteorclient.renderer.GL;
-import meteordevelopment.meteorclient.renderer.Renderer2D;
+import meteordevelopment.meteorclient.gui.WidgetScreen;
+import meteordevelopment.meteorclient.renderer.*;
 import meteordevelopment.meteorclient.renderer.particles.ParticleEngine;
 import meteordevelopment.meteorclient.renderer.text.CFont;
 import meteordevelopment.meteorclient.renderer.text.TTFFontRender;
 import meteordevelopment.meteorclient.systems.hud.HudRenderer;
+import meteordevelopment.meteorclient.utils.Utils;
 import meteordevelopment.meteorclient.utils.misc.MeteorIdentifier;
 import meteordevelopment.meteorclient.utils.render.color.Color;
 import net.minecraft.client.gui.screen.Screen;
@@ -23,11 +25,8 @@ import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
-
-import java.lang.reflect.Method;
 
 public class NewJelloScreen extends Screen {
     public static MeteorIdentifier IDAlt,IDExit,IDLogo,IDMulitPlayer,IDSettings,IDSinglePlayer,IDBg,IDBg1;static {IDAlt = new MeteorIdentifier("textures/jello/altmanager.png");IDExit = new MeteorIdentifier("textures/jello/exit.png");IDLogo = new MeteorIdentifier("textures/jello/jellologo.png");IDMulitPlayer = new MeteorIdentifier("textures/jello/multiplayer.png");IDSettings = new MeteorIdentifier("textures/jello/settings.png");IDSinglePlayer = new MeteorIdentifier("textures/jello/singleplayer.png");IDBg = new MeteorIdentifier("textures/jello/bg.png");IDBg1 = new MeteorIdentifier("textures/jello/bg1.png");}
@@ -36,18 +35,15 @@ public class NewJelloScreen extends Screen {
     private ParticleEngine pe = new ParticleEngine();
     int i = 1;
 
-    public void texture(MatrixStack matrices,MeteorIdentifier id, double x, double y, float u, float v, double width, double height, int textureWidth, int textureHeight) {
-        HudRenderer.INSTANCE.texture(id,x,y,width,height,Color.WHITE);
-    }
-
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        TTFFontRender jelloFont = CFont.jelloLight;
         // Bg
         RenderSystem.setShaderTexture(0,IDBg);
         drawTexture(matrices, (int) (-1177/2 - 372 - animatedMouseX + this.width), (int) (-34/2 +8 - animatedMouseY/9.5f + this.height/19 - 19), 0, 0, 3840/2, 1180/2, 3840/2, 1180/2);
 
-        pe.render(matrices,animatedMouseX, animatedMouseY,this.width,this.height);
+        Utils.unscaledProjection();
+        pe.render(matrices, animatedMouseX, animatedMouseY, this.width, this.height);
+        Utils.scaledProjection();
 
         float offset = (int) (-16 + this.width/2 - 289/2f + 8);
         float height = (int) (this.height/2 + 29/2f - 8 + 1f);

@@ -90,11 +90,11 @@ public class MainScreen extends Screen {
         int rightBarHeight = this.height;
         int right_part1Y = 270;
 
-        DrawableHelper.fill(matrices,0,0,leftBarWidth,leftBarHeight,bgColor.hashCode());
-        DrawableHelper.fill(matrices,rightBarX,0,rightBarWidth,rightBarHeight,bgColor.hashCode());
-        DrawableHelper.fill(matrices,0,left_part1Y,leftBarWidth,2,lineColor.hashCode());
-        DrawableHelper.fill(matrices,0,left_part2Y,leftBarWidth,2,lineColor.hashCode());
-        DrawableHelper.fill(matrices,rightBarX,right_part1Y,rightBarWidth,2,lineColor.hashCode());
+        fill(matrices,0,0,leftBarWidth,leftBarHeight,bgColor.toAWTColor().getRGB());
+        fill(matrices,rightBarX,0,rightBarWidth,rightBarHeight,bgColor.toAWTColor().getRGB());
+        fill(matrices,0,left_part1Y,leftBarWidth,2,lineColor.toAWTColor().getRGB());
+        fill(matrices,0,left_part2Y,leftBarWidth,2,lineColor.toAWTColor().getRGB());
+        fill(matrices,rightBarX,right_part1Y,rightBarWidth,2,lineColor.toAWTColor().getRGB());
         // bar end
         super.renderBackground(matrices);
     }
