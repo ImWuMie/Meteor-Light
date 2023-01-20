@@ -22,7 +22,9 @@ public class CRender {
     }
 
     public void drawRect(double x, double y, double width, double height, Color color) {
-        if (!mesh.isBuilding()) begin(DrawMode.Triangles);
+        if (!mesh.isBuilding()) {
+            begin(DrawMode.Triangles);
+        }
         mesh.quad(
                 mesh.vec2(x, y).color(color).next(),
                 mesh.vec2(x, y + height).color(color).next(),
@@ -32,7 +34,9 @@ public class CRender {
     }
 
     public void drawLine(double x, double y, double x2, double y2, Color color) {
-        if (!mesh.isBuilding()) begin(DrawMode.Lines);
+        if (!mesh.isBuilding()) {
+            begin(DrawMode.Lines);
+        }
         mesh.line(
                 mesh.vec2(x, y).color(color).next(),
                 mesh.vec2(x2, y2).color(color).next()
