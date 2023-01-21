@@ -35,10 +35,6 @@ import meteordevelopment.meteorclient.systems.config.SeedConfigs;
 import meteordevelopment.meteorclient.systems.modules.Categories;
 import meteordevelopment.meteorclient.systems.modules.Modules;
 import meteordevelopment.meteorclient.systems.modules.misc.DiscordPresence;
-/*
-import meteordevelopment.meteorclient.systems.seedcrack.Features;
-import meteordevelopment.meteorclient.systems.seedcrack.cracker.storage.DataStorage;
-import meteordevelopment.meteorclient.systems.seedcrack.finder.FinderQueue;*/
 import meteordevelopment.meteorclient.systems.modules.render.MotionBlur;
 import meteordevelopment.meteorclient.systems.viaversion.commands.VRCommandHandler;
 import meteordevelopment.meteorclient.systems.viaversion.config.VFConfig;
@@ -47,11 +43,9 @@ import meteordevelopment.meteorclient.systems.viaversion.platform.FabricPlatform
 import meteordevelopment.meteorclient.systems.viaversion.platform.VFLoader;
 import meteordevelopment.meteorclient.systems.viaversion.protocol.HostnameParserProtocol;
 import meteordevelopment.meteorclient.systems.viaversion.util.JLoggerToLog4j;
-import meteordevelopment.meteorclient.utils.EulaExcption;
 import meteordevelopment.meteorclient.utils.ReflectInit;
 import meteordevelopment.meteorclient.utils.Utils;
 import meteordevelopment.meteorclient.utils.VectorUtils;
-import meteordevelopment.meteorclient.utils.files.MeteorFile;
 import meteordevelopment.meteorclient.utils.misc.MeteorIdentifier;
 import meteordevelopment.meteorclient.utils.misc.Version;
 import meteordevelopment.meteorclient.utils.misc.input.KeyAction;
@@ -63,17 +57,14 @@ import meteordevelopment.orbit.EventHandler;
 import meteordevelopment.orbit.EventPriority;
 import meteordevelopment.orbit.IEventBus;
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.util.Identifier;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
-import oshi.util.FileUtil;
-import 好的meteor_来自wumie.好的meteor_来自wumie;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.command.CommandSource;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,7 +100,6 @@ public class MeteorClient implements ClientModInitializer {
 
     public static final ArrayList<SeedCrackerAPI> entrypoints = new ArrayList<>();
    /* private final DataStorage dataStorage = new DataStorage();*/
-    public final 好的meteor_来自wumie 我测你码 = new 好的meteor_来自wumie(true,true);
     public static MinecraftClient mc;
     public static MeteorClient INSTANCE;
     public static final IEventBus EVENT_BUS = new EventBus();
@@ -261,8 +251,6 @@ public class MeteorClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        if (!我测你码.ImWuMie) return;
-        if (!我测你码.Im_WuMie) return;
         if (INSTANCE == null) {
             INSTANCE = this;
             return;
@@ -295,6 +283,8 @@ public class MeteorClient implements ClientModInitializer {
         // Pre init
         ReflectInit.preInit();
 
+        VectorUtils.init();
+
         // Register module categories
         Categories.init();
 
@@ -320,8 +310,6 @@ public class MeteorClient implements ClientModInitializer {
 
         // Post init
         ReflectInit.postInit();
-
-        VectorUtils.init();
 
         VectorUtils.postInit();
 

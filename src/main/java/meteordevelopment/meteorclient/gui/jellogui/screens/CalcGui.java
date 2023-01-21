@@ -12,12 +12,15 @@ import meteordevelopment.meteorclient.renderer.*;
 import meteordevelopment.meteorclient.renderer.text.TTFFontRender;
 import meteordevelopment.meteorclient.renderer.text.TextRenderer;
 import meteordevelopment.meteorclient.systems.hud.HudRenderer;
+import meteordevelopment.meteorclient.utils.Utils;
 import meteordevelopment.meteorclient.utils.render.color.Color;
 import net.minecraft.client.util.Clipboard;
 import net.minecraft.client.util.math.MatrixStack;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
+
+import static meteordevelopment.meteorclient.MeteorClient.mc;
 
 public class CalcGui extends GuiFront {
     public CalcGui() {
@@ -32,8 +35,6 @@ public class CalcGui extends GuiFront {
     double a,b;
     Double sum;
     int i;
-
-    private final Mesh mesh = new ShaderMesh(Shaders.POS_COLOR,DrawMode.Triangles, Mesh.Attrib.Vec2, Mesh.Attrib.Color);
 
     @Override
     public boolean shouldCloseOnEsc() {
@@ -108,7 +109,13 @@ public class CalcGui extends GuiFront {
         oY += 76;
         numberButtons.add(new NumberButton(idk,oY,"=",75,75));
 
-        mesh.begin();
+        double s = mc.getWindow().getScaleFactor();
+
+        mouseX *= s;
+        mouseY *= s;
+
+        Utils.unscaledProjection();
+        CRender render = new CRender();
 
         for (NumberButton button : numberButtons) {
             Color numberFontColor = new Color(255,255,255);
@@ -119,7 +126,7 @@ public class CalcGui extends GuiFront {
             double fx = button.x + (button.buttonWidth/2 - fontWidth);
             double fy = button.y + (button.buttonHeight/2 - fontHeight);
             font.render(button.name, (float) fx, (float) fy,numberFontColor);
-            quad(button.x, button.y, button.buttonWidth, button.buttonHeight,buttonColor);
+            render.drawRect(new MatrixStack(),button.x, button.y, button.buttonWidth, button.buttonHeight,buttonColor);
         }
 
         // Bg
@@ -128,26 +135,13 @@ public class CalcGui extends GuiFront {
         font.render("Calc",x+1,y+1,new Color(0,0,0,225),true);
         font.render(text,x+1,y+35+35,new Color(0,0,0,225));
         // Render number button
-        quad((int) x, (int) y,340,650,new Color(255,255,255,190));
+        render.drawRect(new MatrixStack(),(int) x, (int) y,340,650,new Color(255,255,255,190));
         // Drag bar
-        quad((int) x, (int) (y + 30),340,1,new Color(0,0,0,190));
+        render.drawRect(new MatrixStack(),(int) x, (int) (y + 30),340,1,new Color(0,0,0,190));
 
-        mesh.end();
-        mesh.render(matrices);
+        Utils.scaledProjection();
     }
 
-    public void quad(double x, double y, double width, double height, Color color) {
-        quad(x, y, width, height, color, color, color, color);
-    }
-
-    public void quad(double x, double y, double width, double height, Color cTopLeft, Color cTopRight, Color cBottomRight, Color cBottomLeft) {
-        mesh.quad(
-                mesh.vec2(x, y).color(cTopLeft).next(),
-                mesh.vec2(x, y + height).color(cBottomLeft).next(),
-                mesh.vec2(x + width, y + height).color(cBottomRight).next(),
-                mesh.vec2(x + width, y).color(cTopRight).next()
-        );
-    }
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {

@@ -41,9 +41,7 @@ public class NewJelloScreen extends Screen {
         RenderSystem.setShaderTexture(0,IDBg);
         drawTexture(matrices, (int) (-1177/2 - 372 - animatedMouseX + this.width), (int) (-34/2 +8 - animatedMouseY/9.5f + this.height/19 - 19), 0, 0, 3840/2, 1180/2, 3840/2, 1180/2);
 
-        Utils.unscaledProjection();
-        pe.render(matrices, animatedMouseX, animatedMouseY, this.width, this.height);
-        Utils.scaledProjection();
+        pe.render(new MatrixStack(), animatedMouseX, animatedMouseY, this.width, this.height);
 
         float offset = (int) (-16 + this.width/2 - 289/2f + 8);
         float height = (int) (this.height/2 + 29/2f - 8 + 1f);

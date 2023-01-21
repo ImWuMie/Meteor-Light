@@ -61,6 +61,7 @@ public class InfiniteAura extends Module {
     private ArrayList<CustomPathFinder.Vec3>[] test = new ArrayList[50];
     private final Timer cps = new Timer();
     public static Timer timer = new Timer();
+    private int findCount = 0;
 
     // clip mode
     WaitTimer cTimer = new WaitTimer();
@@ -176,6 +177,14 @@ public class InfiniteAura extends Module {
             .build()
     );
 
+    private final Setting<Integer> maxFindCount = sgDelay.add(new IntSetting.Builder()
+            .name("max-find-count")
+            .description("idk")
+            .sliderRange(100,1145141919)
+            .min(100)
+            .build()
+    );
+
     private final Setting<Boolean> drawpath = sgGeneral.add(new BoolSetting.Builder()
             .name("path")
             .description("render path")
@@ -246,6 +255,7 @@ public class InfiniteAura extends Module {
             this.attack = false;
             return;
         }*/
+        findCount = 0;
         timer.reset();
         super.onActivate();
     }
@@ -337,6 +347,7 @@ public class InfiniteAura extends Module {
                         test = new ArrayList[50];
                         for (int i = 0; i < (targets.size() > Targets.get() ? Targets.get() : targets.size()); i++) {
                             Entity T = targets.get(i);
+                            findCount = 0;
                             CustomPathFinder.Vec3 topFrom = new CustomPathFinder.Vec3(mc.player.getX(), mc.player.getY(), mc.player.getZ());
                             CustomPathFinder.Vec3 to = new CustomPathFinder.Vec3(T.getX(), T.getY(), T.getZ());
                             if (pfm.get().equals(PathFindM.PathFind1)) {
@@ -453,6 +464,9 @@ public class InfiniteAura extends Module {
         ArrayList<CustomPathFinder.Vec3> path = new ArrayList<>();
         ArrayList<CustomPathFinder.Vec3> pathFinderPath = pathfinder.getPath();
         for (CustomPathFinder.Vec3 pathElm : pathFinderPath) {
+            if (findCount >= maxFindCount.get()) {
+                continue;
+            }
             if (i == 0 || i == pathFinderPath.size() - 1) {
                 if (lastLoc != null) {
                     path.add(lastLoc.addVector(0.5, 0, 0.5));
@@ -475,7 +489,9 @@ public class InfiniteAura extends Module {
                     for (int x = (int) smallX; x <= bigX; x++) {
                         for (int y = (int) smallY; y <= bigY; y++) {
                             for (int z = (int) smallZ; z <= bigZ; z++) {
-                                if (!CustomPathFinder.checkPositionValidity(x, y, z)) {
+                                if (CustomPathFinder.checkPositionValidity(x, y, z)) {
+                                    findCount++;
+                                } else {
                                     canContinue = false;
                                     break cordsLoop;
                                 }

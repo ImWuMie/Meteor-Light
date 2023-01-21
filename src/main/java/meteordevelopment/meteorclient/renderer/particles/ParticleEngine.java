@@ -68,7 +68,6 @@ public class ParticleEngine {
         matrixStack.push();
         matrixStack.scale(0.1f,0.1f,0.1f);
         drawCircle(matrixStack,x *= 10, y *= 10, radius *= 10.0f, insideC);
-        matrixStack.scale(10f,10f,10f);
         matrixStack.pop();
     }
 
@@ -78,12 +77,9 @@ public class ParticleEngine {
         float green = (float)(color >> 8 & 255) / 255.0f;
         float blue = (float)(color & 255) / 255.0f;
         int i = 0;
-        CRender render = new CRender();
-        render.begin(DrawMode.Lines);
         while (i <= 360) {
-            render.drawLine(x,y,x + Math.sin((double)i * 3.141526 / 180.0) * (double)radius, (double)((double)y + Math.cos((double)i * 3.141526 / 180.0) * (double)radius),new meteordevelopment.meteorclient.utils.render.color.Color(red,green,blue,alpha));
+            CRender.Immediate.drawLine(matrices,x,y,x + Math.sin((double)i * 3.141526 / 180.0) * (double)radius, (double)((double)y + Math.cos((double)i * 3.141526 / 180.0) * (double)radius),new meteordevelopment.meteorclient.utils.render.color.Color(red,green,blue,alpha),false);
             ++i;
         }
-        render.end(matrices);
     }
 }

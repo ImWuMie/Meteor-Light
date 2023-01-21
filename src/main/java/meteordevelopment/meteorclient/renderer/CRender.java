@@ -1,5 +1,6 @@
 package meteordevelopment.meteorclient.renderer;
 
+import meteordevelopment.meteorclient.utils.Utils;
 import meteordevelopment.meteorclient.utils.render.color.Color;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -21,26 +22,32 @@ public class CRender {
         this.mesh.begin();
     }
 
-    public void drawRect(double x, double y, double width, double height, Color color) {
-        if (!mesh.isBuilding()) {
-            begin(DrawMode.Triangles);
-        }
+    public void drawRect(MatrixStack matrices,double x, double y, double width, double height, Color color) {
+        begin(DrawMode.Triangles);
         mesh.quad(
                 mesh.vec2(x, y).color(color).next(),
                 mesh.vec2(x, y + height).color(color).next(),
                 mesh.vec2(x + width, y + height).color(color).next(),
                 mesh.vec2(x + width, y).color(color).next()
         );
+        end(matrices);
     }
 
-    public void drawLine(double x, double y, double x2, double y2, Color color) {
-        if (!mesh.isBuilding()) {
-            begin(DrawMode.Lines);
-        }
+    public void drawLine(MatrixStack matrices,double x, double y, double x2, double y2, Color color) {
+        begin(DrawMode.Triangles);
         mesh.line(
                 mesh.vec2(x, y).color(color).next(),
                 mesh.vec2(x2, y2).color(color).next()
         );
+        end(matrices);
+    }
+
+    public void drawRect(double x, double y, double width, double height, Color color) {
+        this.drawRect(new MatrixStack(),x,y,width,height,color);
+    }
+
+    public void drawLine(double x, double y, double x2, double y2, Color color) {
+        this.drawLine(new MatrixStack(),x,y,x2,y2,color);
     }
 
     public void end(MatrixStack matrices) {
@@ -49,6 +56,30 @@ public class CRender {
     }
 
     public void end() {
-        this.end(null);
+        this.end(new MatrixStack());
+    }
+
+    public static class Immediate {
+        public static void drawRect(MatrixStack matrices,double x,double y,double width,double height,Color color,boolean render3d) {
+            CRender render = new CRender();
+            if (render3d) Utils.unscaledProjection();
+            render.drawRect(matrices,x,y,width,height,color);
+            if (render3d) Utils.scaledProjection();
+        }
+
+        public static void drawRect(double x,double y,double width,double height,Color color,boolean render3d) {
+            drawRect(new MatrixStack(),x,y,width,height,color,render3d);
+        }
+
+        public static void drawLine(MatrixStack matrices,double x,double y,double x2,double y2,Color color,boolean render3d) {
+            CRender render = new CRender();
+            if (render3d) Utils.unscaledProjection();
+            render.drawLine(matrices,x,y,x2,y2,color);
+            if (render3d) Utils.scaledProjection();
+        }
+
+        public static void drawLine(double x,double y,double x2,double y2,Color color,boolean render3d) {
+            drawLine(new MatrixStack(),x,y,x2,y2,color,render3d);
+        }
     }
 }
