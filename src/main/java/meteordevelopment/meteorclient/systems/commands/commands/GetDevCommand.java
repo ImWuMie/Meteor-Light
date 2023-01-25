@@ -20,8 +20,8 @@ public class GetDevCommand extends Command {
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(literal("get").executes(context -> {
             info("Devs:");
-            info("Meteor Team & wumie");
-            info("private Client :)");
+            info("Meteor Team & wumie,Yurnu");
+            info("public Client :)");
             return SINGLE_SUCCESS;
         }));
     }

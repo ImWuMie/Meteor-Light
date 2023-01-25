@@ -52,6 +52,7 @@ public class Commands extends System<Commands> {
             add(new SetVelocityCommand());
             add(new ServerLocateCommand());
             add(new GhostCommand());
+            add(new PacketCommand());
             add(new InfTpCommand());
             add(new PlayerCheckCommand());
             add(new TeleportCommand());

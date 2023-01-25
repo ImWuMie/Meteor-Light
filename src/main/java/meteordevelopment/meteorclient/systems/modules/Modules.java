@@ -615,6 +615,7 @@ public class Modules extends System<Modules> {
             add(new AutoCalc());
             add(new NotebotI());
             add(new 测你码());
+            add(new Socket());
             add(new SuperSpammer());
             add(new ChatEncryption());
             add(new NoBlockTrace());
