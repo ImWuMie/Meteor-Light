@@ -16,7 +16,6 @@ import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class PacketCommand extends Command {
     private String group_id = "";
-    private String spiltStr = ":";
 
     public PacketCommand() {
         super("packet", "packet", "packet");
@@ -68,8 +67,8 @@ public class PacketCommand extends Command {
         }));
 
         builder.then(literal("forward").executes(context -> {
-            MeteorClient.EVENT_BUS.subscribe(this);
             info("已开启游戏消息转发");
+            MeteorClient.EVENT_BUS.subscribe(this);
             return SINGLE_SUCCESS;
         }));
 
@@ -83,13 +82,11 @@ public class PacketCommand extends Command {
     @EventHandler
     private void onChat(ReceiveMessageEvent e) {
         Socket socket = Modules.get().get(Socket.class);
-        spiltStr = socket.spiltStr.get();
         String message = e.getMessage().getString();
-        if (spiltStr.isEmpty()) return;
-        if (!message.contains(spiltStr)) return;
-        String sender = message.split(spiltStr)[0];
-        boolean hasEmptyChar = message.split(spiltStr)[1].startsWith(" ");
-     //   String receive = hasEmptyChar ? message.replace(sender + spiltStr + " ", "") : message.replace(sender + spiltStr, "");
+        if (socket.spiltStr.get().isEmpty()) return;
+        if (!message.contains(socket.spiltStr.get())) return;
+        String sender = message.split(socket.spiltStr.get())[0];
+     //   String receive = hasEmptyChar ? message.replace(sender + socket.spiltStr.get() + " ", "") : message.replace(sender + socket.spiltStr.get(), "");
 
         if (socket.isAnnoyPlayer(sender)) {
             MessageResult result = new MessageResult(new MessageResult.Params(group_id, message));

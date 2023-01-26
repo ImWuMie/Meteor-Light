@@ -52,7 +52,10 @@ public class SocketLaunch {
         serverRunning = false;
         clientRunning = false;
         try {
-            if (mainServer != null) mainServer.stop(1000);
+            if (mainServer != null) {
+                mainServer.saveUsers();
+                mainServer.stop(1000);
+            }
             if (mainClient != null) mainClient.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,6 +67,7 @@ public class SocketLaunch {
         SocketServer server = new SocketServer(port);
         serverRunning = true;
         mainServer = server;
+        mainServer.loadUsers();
         info("--正在启动WebSocket服务--");
         info("Port: " + server.getPort());
         mainServer.start();

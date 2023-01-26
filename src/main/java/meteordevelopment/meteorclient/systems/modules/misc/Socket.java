@@ -36,7 +36,6 @@ public class Socket extends Module {
     public final Setting<Boolean> qqMessage = sgGeneral.add(new BoolSetting.Builder()
             .name("qq-message")
             .defaultValue(false)
-            .visible(() -> mode.get().equals(SocketMode.Client))
             .build()
     );
 
@@ -50,14 +49,12 @@ public class Socket extends Module {
     public final Setting<String> spiltStr = sgGeneral.add(new StringSetting.Builder()
             .name("split-string")
             .defaultValue(":")
-            .visible(() -> mode.get().equals(SocketMode.Client))
             .build()
     );
 
     public final Setting<Boolean> fishingBot = sgGeneral.add(new BoolSetting.Builder()
             .name("fishing-bot")
             .defaultValue(false)
-            .visible(() -> mode.get().equals(SocketMode.Client))
             .build()
     );
 
